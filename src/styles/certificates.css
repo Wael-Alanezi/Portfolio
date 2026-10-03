@@ -87,6 +87,7 @@
 }
 
 .cert-dialog {
+  overscroll-behavior: contain;
   inline-size: min(100% - 32px, 1040px);
   max-inline-size: none;
   max-block-size: calc(100dvh - 32px);

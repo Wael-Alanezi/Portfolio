@@ -1,12 +1,12 @@
 ---
-import '@fontsource-variable/bricolage-grotesque/standard.css';
+import '@fontsource-variable/bricolage-grotesque/opsz.css';
 import '@fontsource-variable/geist/wght.css';
 import '@fontsource-variable/alexandria/wght.css';
 import '@fontsource/ibm-plex-sans-arabic/arabic-400.css';
 import '@fontsource/ibm-plex-sans-arabic/arabic-500.css';
 import '../styles/base.css';
 import '../styles/site.css';
-import bricolageLatin from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-standard-normal.woff2?url';
+import bricolageLatin from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
 import geistLatin from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 import { getSite } from '../lib/site';
 
@@ -48,6 +48,7 @@ const ogImage = new URL('/og.png', Astro.site);
       try {
         const saved = localStorage.getItem('theme');
         if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+        if (saved === 'light') document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f4f6f5');
       } catch {}
     </script>
   </head>

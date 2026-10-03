@@ -8,9 +8,9 @@ cv: /cv.pdf
 
 headline: I build software that holds up in real operations.
 intro: "Software Engineering student at Prince Sultan University (AI & Data Science track) and land operations supervisor in Riyadh. Open to software engineering, data and AI internships for [season and year]."
-proof: "Made search about 10× faster: 2.7 s to 0.26 s on 100,000 listings."
+proof: "Made search about 10× faster: 2.7 s to 0.26 s on 100,000 listings."
 
-about: "I work in land operations, so I see where processes break: [two or three real examples from your job]. That's what I like to build for. I'm studying Software Engineering at Prince Sultan University on the AI & Data Science track, graduating in 2028. My recent work covers a full-stack rental marketplace with measured performance, an AI price-comparison tool I evaluated with real statistics, and agentic AI systems that keep a human in the loop. I care about software that is correct, measured and useful to the people running the work."
+about: "I work in land operations, so I see where processes break: [two or three real examples from your job]. That’s what I like to build for. I’m studying Software Engineering at Prince Sultan University on the AI & Data Science track, graduating in 2028. My recent work covers a full-stack rental marketplace with measured performance, an AI price-comparison tool I evaluated with real statistics, and agentic AI systems that keep a human in the loop. I care about software that is correct, measured and useful to the people running the work."
 
 experience:
   - role: Land Operations Supervisor

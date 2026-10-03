@@ -3,7 +3,7 @@ title: Agentic personal assistant
 order: 4
 size: small
 oneLine: "A multi-agent assistant for calendar, notes and email, with a human in the loop."
-context: "Capstone for SDAIA Academy's \"Building Agentic AI Systems\" program, July 2026."
+context: "Capstone for SDAIA Academy’s “Building Agentic AI Systems” program, July 2026."
 image: agentic-assistant.webp
 imageAlt: "[Agentic personal assistant screenshot]"
 stack: [Python, LangGraph, Chroma, OpenRouter, Google Colab]

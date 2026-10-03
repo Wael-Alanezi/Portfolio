@@ -25,7 +25,7 @@ New lessons go through a human approval gate, and the reflection step defaults t
 
 ## Data
 
-NASA's public lessons-learned records plus synthetic documents in a Saudi project context.
+NASA’s public lessons-learned records plus synthetic documents in a Saudi project context.
 
 ## What I learned
 

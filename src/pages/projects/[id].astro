@@ -24,7 +24,7 @@ const poster = data.video ? `/projects/${data.video}-poster.webp` : undefined;
 <Layout title={`${data.title} | ${site.name}`} description={data.oneLine}>
   <div class="case">
     <header class="case-top">
-      <a class="name" href="/">{site.name}</a>
+      <a class="name" href="/" translate="no">{site.name}</a>
       <nav class="case-nav" aria-label="Primary">
         <a href="/#work">All projects</a>
         <button type="button" class="theme" data-theme-toggle>Light theme</button>
@@ -33,7 +33,7 @@ const poster = data.video ? `/projects/${data.video}-poster.webp` : undefined;
 
     <main id="main">
       <div class="case-head">
-        <h1>{data.title}</h1>
+        <h1 translate="no">{data.title}</h1>
         <p class="lede">{data.oneLine}</p>
         <p class="case-meta">{data.context}</p>
         {data.result && <p class="result">{data.result}</p>}
@@ -76,14 +76,14 @@ const poster = data.video ? `/projects/${data.video}-poster.webp` : undefined;
 
       <div class="case-foot">
         <h2 class="section-title">Stack</h2>
-        <p>{data.stack.join(', ')}</p>
+        <p translate="no">{data.stack.join(', ')}</p>
         <h2 class="section-title">Links</h2>
         <ProjectLinks links={data.links} />
       </div>
 
       <a class="next" href={`/projects/${next.id}/`}>
-        <span>Next project</span>
-        {next.data.title}
+        <span class="next-label">Next project</span>
+        <span translate="no">{next.data.title}</span>
       </a>
     </main>
 

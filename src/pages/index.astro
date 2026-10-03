@@ -21,7 +21,7 @@ const sections = [
 <Layout>
   <div class="shell">
     <header class="side">
-      <a class="name" href="/">{site.name}</a>
+      <a class="name" href="/" translate="no">{site.name}</a>
       <h1>{site.headline}</h1>
       <p class="intro">{site.intro}</p>
       <p class="proof">{site.proof}</p>
@@ -51,7 +51,7 @@ const sections = [
         <h2 id="work-title" class="section-title">Selected work</h2>
         <ul class="work">
           {
-            projects.map((project) => (
+            projects.map((project, i) => (
               <li class="project">
                 <div class="project-media">
                   <img
@@ -61,13 +61,15 @@ const sections = [
                     width={project.picture.width}
                     height={project.picture.height}
                     alt={project.data.imageAlt}
-                    loading="lazy"
+                    loading={i === 0 ? 'eager' : 'lazy'}
                     decoding="async"
                   />
                 </div>
                 <div class="project-text">
                   <h3>
-                    <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+                    <a href={`/projects/${project.id}/`} translate="no">
+                      {project.data.title}
+                    </a>
                   </h3>
                   <p>{project.data.oneLine}</p>
                   {project.data.result && <p class="result">{project.data.result}</p>}
@@ -76,7 +78,9 @@ const sections = [
                       <span>Design decision:</span> {project.data.decision}
                     </p>
                   )}
-                  <p class="stack">{project.data.stack.slice(0, 5).join(', ')}</p>
+                  <p class="stack" translate="no">
+                    {project.data.stack.slice(0, 5).join(', ')}
+                  </p>
                   <ProjectLinks links={[{ label: 'Case study', href: `/projects/${project.id}/` }, ...project.data.links]} />
                 </div>
               </li>
@@ -88,7 +92,7 @@ const sections = [
           {
             site.more.map((item) => (
               <div>
-                <dt>{item.name}</dt>
+                <dt translate="no">{item.name}</dt>
                 <dd>{item.text}</dd>
               </div>
             ))
@@ -148,7 +152,9 @@ const sections = [
       <section id="contact" class="section" aria-labelledby="contact-title">
         <h2 id="contact-title" class="section-title">Contact</h2>
         <p class="body">{site.contact}</p>
-        <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+        <a class="email" href={`mailto:${site.email}`} translate="no">
+          {site.email}
+        </a>
         <ul class="contact-links">
           <li><a href={site.linkedin}>LinkedIn</a></li>
           <li><a href={site.github}>GitHub</a></li>

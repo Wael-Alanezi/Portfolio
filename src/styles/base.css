@@ -49,6 +49,12 @@ button {
   color: inherit;
 }
 
+a,
+button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--focus) 20%, transparent);
+}
+
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
