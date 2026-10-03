@@ -74,6 +74,20 @@ Bricolage uses its variable `opsz`, `wdth` and `wght` axes, with `font-optical-s
 - **Why:** One signature interaction, everything else still.
 
 ## Open Graph image and site URL
-- **What:** `public/og.png` is the Rent & Build crop on the Spruce background, with no text. `site` in `astro.config.mjs` and `robots.txt` are set to `https://wael-alanezi.vercel.app`.
-- **Why:** No text inside images, so nothing needs translating later. The real domain will only be known after the first Vercel deploy.
+- **What:** `public/og.png` is the Rent & Build crop on the Spruce background, with no text. `site` in `astro.config.mjs` and the sitemap line in `robots.txt` use Wael's domain, `https://waelalanezi.com`.
+- **Why:** No text inside images, so nothing needs translating later. Canonical URLs, Open Graph URLs and the sitemap must use the real domain.
 - **Alternative rejected:** An Open Graph image with the name and headline set in it.
+
+## Vercel Web Interface Guidelines review
+- **What:** Reviewed the site against github.com/vercel-labs/web-interface-guidelines and fixed what applied:
+  - `touch-action: manipulation` and a themed tap highlight on links and buttons.
+  - `overscroll-behavior: contain` on the lightbox.
+  - Curly quotes and apostrophes in the content.
+  - Non-breaking spaces between numbers and units.
+  - Tabular figures for result numbers.
+  - `translate="no"` on the name, project names, stacks and email.
+  - The first project image loads eagerly, because it is above the fold on desktop.
+  - Bricolage subset to its weight and optical-size axes (77 KB instead of 132 KB).
+  - `theme-color` set before the first paint for the light theme.
+- **Already met:** keyboard use and focus management, visible focus rings, hit targets (24 px on desktop, 44 px on phones), reduced motion, image dimensions, font preloading, `color-scheme`, skip link and heading order.
+- **Not applied:** the Forms section (the site has no forms) and the Vercel-specific copywriting preferences (Title Case, "&" for "and"), which the guidelines mark as Vercel's own brand choices rather than universal rules. The site keeps sentence case, as the guidelines recommend for marketing pages.

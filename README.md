@@ -32,6 +32,8 @@ Open http://localhost:4321. Use `npm run build` and then `npm run preview` to ch
 
 1. Push this repo to GitHub.
 2. In Vercel, choose **Add New → Project**, import the repo, and keep the detected **Astro** preset (build command `npm run build`, output folder `dist`).
-3. Deploy. If the site's address is not `https://wael-alanezi.vercel.app`, update `site` in `astro.config.mjs` and the sitemap line in `public/robots.txt`, then push again.
+3. Deploy, then in the project's **Settings → Domains** add `waelalanezi.com` (and `www.waelalanezi.com`, redirecting to it) and set the DNS records Vercel shows at your domain registrar.
+
+The site address is set to `https://waelalanezi.com` in `astro.config.mjs` and in the sitemap line of `public/robots.txt`. Change both if the domain ever changes.
 
 There are no cookies, trackers or analytics.

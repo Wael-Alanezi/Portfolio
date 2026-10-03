@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wael-alanezi.vercel.app/sitemap-index.xml
+Sitemap: https://waelalanezi.com/sitemap-index.xml
