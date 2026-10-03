@@ -21,6 +21,59 @@
 - **Alternative rejected:** A CSS-only preview anchored to each row. It cannot reliably avoid the screen edges or the neighbouring rows.
 
 ## Placeholder links
-- **What:** `/cv.pdf` is linked now and will work once the file is added to `public/`. Project links without a URL (for example `Live demo [URL]`) render as plain text, not as broken links. The Rent & Build decisions link assumes the file is `DECISIONS.md` on the `main` branch.
+- **What:** `/cv.pdf` is linked now and will work once the file is added to `public/`. Project links without a URL (for example `Live demo [URL]`) render as plain text, not as broken links. The Rent & Build decisions link points to `docs/DECISIONS.md` on `main`, checked against a clone of the repo.
 - **Why:** Keeps placeholders visible without shipping dead links.
 - **Alternative rejected:** Hiding links that have no URL, which would hide the placeholder from Wael.
+
+## Direction: Spruce, refined
+- **What:** Spruce (sticky sidebar, dark-first with a light theme) became the site. Wael picked Bricolage Grotesque (Arabic companion Alexandria) and the Sand accent from an options sheet. The other three directions and the options sheet were removed.
+- **Why:** Spruce was the strongest of the four. Bricolage for the name, headline and contact email, plus a warm accent instead of mint, move it away from the common dark-sidebar portfolio look.
+- **Alternative rejected:** Instrument Serif or Fraunces for display, and Brass or Amber for the accent (all shown on the options sheet).
+
+## Final tokens
+**Colors**
+
+| Token | Dark (default) | Light | Used for |
+|---|---|---|---|
+| `--bg` | `#0F1716` | `#F4F6F5` | Page background |
+| `--raised` | `#16221F` | `#E8EDEB` | Project and certificate hover rows, image backgrounds |
+| `--ink` | `#E6ECE9` | `#101917` | Name, headline, headings, titles |
+| `--text` | `#C3CCC8` | `#2C3835` | Body text (11.1:1 dark, 11.2:1 light) |
+| `--muted` | `#97A4A0` | `#4F5C58` | Dates, tags, meta (7.1:1 dark, 6.4:1 light) |
+| `--line` | `#2A3734` | `#D3DBD8` | Borders, image outlines |
+| `--accent` | `#D9B77E` Sand | `#7A5A24` | Proof line, results, primary button, email, focus ring (9.6:1 dark, 5.8:1 light) |
+| `--on-accent` | `#0F1716` | `#FFFFFF` | Primary button label (9.6:1 dark, 6.3:1 light) |
+
+**Type**
+
+| Step | Size | Font | Used for |
+|---|---|---|---|
+| xs | 13 px | Geist | Dates, tags, link rows, captions, footer |
+| label | 15 px, weight 500 | Geist | Section headings, in `--ink` |
+| base | 16 px / 1.6 | Geist | All body text, including About and project descriptions |
+| md | 20 px, weight 600 | Geist | Project titles, job and degree titles, case-study section headings |
+| lg | 28 px | Bricolage Grotesque, weight 600 | Name; contact email on phones; case-study titles use Geist at this size |
+| xl | 48 px desktop, 36 px under 640 px | Bricolage Grotesque, weight 600 | Headline; contact email from 640 px |
+
+Bricolage uses its variable `opsz`, `wdth` and `wght` axes, with `font-optical-sizing: auto`. Text blocks are capped at `--measure: 32rem`, which gives 45 to 75 characters per line at every tested width. Arabic companions are already in the font stacks (Alexandria for display, IBM Plex Sans Arabic for Geist). Their files download only when Arabic text appears.
+
+**Spacing** (`--space-1` to `--space-9`): 4, 8, 12, 16, 24, 32, 48, 64, 96 px. Radius is 8 px for images and buttons, 12 px for hover rows. Every tap target on phones is at least 44 px tall. Project title links sit inside rows that are fully clickable.
+
+## Sidebar height
+- **What:** The sticky sidebar is exactly one viewport tall, with the theme row pushed to the bottom. Below 860 px of height, the gaps tighten. As a last resort, the sidebar can scroll on its own (`overflow-y: auto`).
+- **Why:** It must fit completely at 1366×768 and 1440×900. Measured in Playwright, it fits both without scrolling.
+- **Alternative rejected:** A non-sticky sidebar, which loses the section menu once you scroll.
+
+## Images and video
+- **What:** Rent & Build's home image is a 16:10 crop of `docs/screenshots/details.png` from the Rent-Build repo. It shows the excavator and the booking card, padded with the app's own background colour (`#F3F6FA`). The case-study page uses `home.png`, plus `docs/demo.gif` converted to a muted, looping WebM (about 390 KB) and MP4 (about 630 KB), with the blank first half second trimmed. The video does not autoplay. It has controls and a poster from the owner's booking-requests screen. Other projects use neutral mid-tone placeholders until real screenshots are added.
+- **Why:** Wael asked that nothing animate except the certificate preview, so the video plays only when someone presses play.
+- **Alternative rejected:** Autoplaying the video, and showing the whole page screenshot (too busy at thumbnail size).
+
+## Motion
+- **What:** The certificate preview (150 ms fade and scale) and the lightbox fade are the only motion. Hover states on project and certificate rows change colour instantly, without transitions. The sidebar's current-section marker moves without animation.
+- **Why:** One signature interaction, everything else still.
+
+## Open Graph image and site URL
+- **What:** `public/og.png` is the Rent & Build crop on the Spruce background, with no text. `site` in `astro.config.mjs` and `robots.txt` are set to `https://wael-alanezi.vercel.app`.
+- **Why:** No text inside images, so nothing needs translating later. The real domain will only be known after the first Vercel deploy.
+- **Alternative rejected:** An Open Graph image with the name and headline set in it.
