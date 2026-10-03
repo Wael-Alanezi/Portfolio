@@ -1,0 +1,213 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import '../styles/certificates.css';
+
+interface Item {
+  title: string;
+  issuer: string;
+  date: string;
+  image: string;
+  alt: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+const folder = path.join(process.cwd(), 'public', 'certificates');
+
+const certificates = items.map((item) => {
+  const hasFull = fs.existsSync(path.join(folder, item.image));
+  const hasThumb = fs.existsSync(path.join(folder, 'thumbs', item.image));
+  return {
+    ...item,
+    meta: `${item.issuer}, ${item.date}`,
+    full: hasFull ? `/certificates/${item.image}` : '',
+    thumb: hasThumb ? `/certificates/thumbs/${item.image}` : hasFull ? `/certificates/${item.image}` : '',
+  };
+});
+---
+
+<ul class="certs" data-certs>
+  {
+    certificates.map((item) => (
+      <li class="cert">
+        <button
+          type="button"
+          class="cert-trigger"
+          aria-haspopup="dialog"
+          data-title={item.title}
+          data-meta={item.meta}
+          data-alt={item.alt}
+          data-full={item.full}
+          data-thumb={item.thumb}
+        >
+          <span class="cert-title">{item.title}</span>
+          <span class="cert-meta">{item.meta}</span>
+        </button>
+      </li>
+    ))
+  }
+</ul>
+
+<div class="cert-preview" aria-hidden="true">
+  <img class="cert-image" alt="" width="480" height="340" loading="lazy" decoding="async" hidden />
+  <div class="cert-card">
+    <span class="cert-card-title"></span>
+    <span class="cert-card-meta"></span>
+    <span class="cert-card-note">[Certificate image]</span>
+  </div>
+</div>
+
+<dialog class="cert-dialog" aria-labelledby="cert-dialog-title">
+  <div class="cert-dialog-body">
+    <div class="cert-dialog-head">
+      <p class="cert-dialog-title" id="cert-dialog-title"></p>
+      <button type="button" class="cert-close">Close</button>
+    </div>
+    <img class="cert-image" alt="" width="1600" height="1131" loading="lazy" decoding="async" hidden />
+    <div class="cert-card cert-card-large">
+      <span class="cert-card-title"></span>
+      <span class="cert-card-meta"></span>
+      <span class="cert-card-note">[Certificate image]</span>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const list = document.querySelector<HTMLElement>('[data-certs]');
+  const preview = document.querySelector<HTMLElement>('.cert-preview');
+  const dialog = document.querySelector<HTMLDialogElement>('.cert-dialog');
+
+  if (list && preview && dialog) {
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const dialogTitle = dialog.querySelector<HTMLElement>('.cert-dialog-title')!;
+    const closeButton = dialog.querySelector<HTMLButtonElement>('.cert-close')!;
+    let current: HTMLButtonElement | null = null;
+    let opener: HTMLButtonElement | null = null;
+
+    const fill = (box: HTMLElement, trigger: HTMLButtonElement, src: string) => {
+      const image = box.querySelector<HTMLImageElement>('.cert-image')!;
+      const card = box.querySelector<HTMLElement>('.cert-card')!;
+      card.querySelector('.cert-card-title')!.textContent = trigger.dataset.title ?? '';
+      card.querySelector('.cert-card-meta')!.textContent = trigger.dataset.meta ?? '';
+      if (src) {
+        image.src = src;
+        image.alt = trigger.dataset.alt ?? '';
+        image.hidden = false;
+        card.hidden = true;
+      } else {
+        image.removeAttribute('src');
+        image.hidden = true;
+        card.hidden = false;
+      }
+    };
+
+    const place = (trigger: HTMLButtonElement) => {
+      const parts = [...list.querySelectorAll('.cert-trigger > span')].map((span) => span.getBoundingClientRect());
+      const textStart = Math.min(...parts.map((r) => r.left));
+      const textEnd = Math.max(...parts.map((r) => r.right));
+      const box = trigger.getBoundingClientRect();
+      const width = preview.offsetWidth;
+      const height = preview.offsetHeight;
+      const gap = 16;
+      const edge = 8;
+      const viewWidth = document.documentElement.clientWidth;
+      const viewHeight = window.innerHeight;
+      const after = { x: textEnd + gap, fits: textEnd + gap + width <= viewWidth - edge, origin: 'left center' };
+      const before = { x: textStart - gap - width, fits: textStart - gap - width >= edge, origin: 'right center' };
+      const sides = document.documentElement.dir === 'rtl' ? [before, after] : [after, before];
+      const side = sides.find((option) => option.fits);
+      let x;
+      let y;
+      let origin;
+
+      if (side) {
+        x = side.x;
+        y = box.top + box.height / 2 - height / 2;
+        origin = side.origin;
+      } else {
+        x = Math.min(Math.max(textStart, edge), viewWidth - width - edge);
+        const below = box.bottom + gap + height <= viewHeight - edge;
+        y = below ? box.bottom + gap : box.top - gap - height;
+        origin = below ? 'center top' : 'center bottom';
+      }
+
+      y = Math.min(Math.max(y, edge), viewHeight - height - edge);
+      preview.style.left = `${x}px`;
+      preview.style.top = `${y}px`;
+      preview.style.transformOrigin = origin;
+    };
+
+    const show = (trigger: HTMLButtonElement) => {
+      if (current === trigger) return;
+      current = trigger;
+      fill(preview, trigger, trigger.dataset.thumb ?? '');
+      place(trigger);
+      preview.classList.add('is-visible');
+    };
+
+    const hide = () => {
+      current = null;
+      preview.classList.remove('is-visible');
+    };
+
+    const triggerFrom = (target: EventTarget | null) =>
+      target instanceof Element ? target.closest<HTMLButtonElement>('.cert-trigger') : null;
+
+    list.addEventListener('pointerover', (event) => {
+      const trigger = triggerFrom(event.target);
+      if (trigger && event.pointerType === 'mouse' && finePointer.matches) show(trigger);
+    });
+
+    list.addEventListener('pointerout', (event) => {
+      const trigger = triggerFrom(event.target);
+      if (trigger && !trigger.contains(event.relatedTarget as Node | null) && trigger !== document.activeElement) hide();
+    });
+
+    list.addEventListener('focusin', (event) => {
+      const trigger = triggerFrom(event.target);
+      if (trigger && trigger.matches(':focus-visible')) show(trigger);
+    });
+
+    list.addEventListener('focusout', hide);
+
+    window.addEventListener('scroll', () => current && place(current), { passive: true });
+    window.addEventListener('resize', () => current && place(current));
+
+    list.addEventListener('click', (event) => {
+      const trigger = triggerFrom(event.target);
+      if (!trigger) return;
+      hide();
+      opener = trigger;
+      dialogTitle.textContent = `${trigger.dataset.title}, ${trigger.dataset.meta}`;
+      fill(dialog, trigger, trigger.dataset.full ?? '');
+      dialog.showModal();
+      closeButton.focus();
+    });
+
+    closeButton.addEventListener('click', () => dialog.close());
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key !== 'Tab') return;
+      const focusable = [...dialog.querySelectorAll<HTMLElement>('button, a[href]')];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    dialog.addEventListener('close', () => opener?.focus({ preventScroll: true }));
+  }
+</script>

@@ -1,0 +1,37 @@
+---
+import '../styles/base.css';
+import Head from '../components/Head.astro';
+
+const directions = [
+  { href: '/directions/margin', name: 'Margin' },
+  { href: '/directions/spruce', name: 'Spruce' },
+  { href: '/directions/spread', name: 'Spread' },
+  { href: '/directions/offset', name: 'Offset' },
+];
+---
+
+<html lang="en" dir="ltr">
+  <head>
+    <Head title="Design directions" description="Four design directions for the portfolio." />
+    <style>
+      :root {
+        --bg: #fff;
+        --ink: #1c1d1f;
+        --focus: #1c1d1f;
+      }
+      body {
+        padding: 48px 16px;
+        font-family: system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+      }
+      li {
+        margin-block: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Design directions</h1>
+    <ul>{directions.map((d) => <li><a href={d.href}>{d.name}</a></li>)}</ul>
+  </body>
+</html>

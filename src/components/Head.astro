@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  themeScript?: boolean;
+}
+
+const { title, description, themeScript = false } = Astro.props;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+{
+  themeScript && (
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  )
+}

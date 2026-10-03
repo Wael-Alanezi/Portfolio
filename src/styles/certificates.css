@@ -1,0 +1,167 @@
+.cert-trigger {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  inline-size: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: start;
+  cursor: pointer;
+}
+
+.cert-trigger > span {
+  inline-size: fit-content;
+}
+
+.cert-preview {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 50;
+  inline-size: 240px;
+  aspect-ratio: 1.414;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.94);
+  transition:
+    opacity 150ms ease-out,
+    transform 150ms ease-out,
+    visibility 0s linear 150ms;
+}
+
+.cert-preview.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 150ms ease-out,
+    transform 150ms ease-out;
+}
+
+.cert-preview .cert-image,
+.cert-preview .cert-card {
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: var(--cert-radius, 4px);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.08),
+    0 12px 32px -8px rgb(0 0 0 / 0.28);
+}
+
+.cert-image {
+  object-fit: cover;
+  background: var(--cert-surface);
+}
+
+.cert-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 16px;
+  background: var(--cert-surface);
+  border: 1px solid var(--cert-line);
+  color: var(--cert-ink);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.cert-card[hidden],
+.cert-image[hidden] {
+  display: none;
+}
+
+.cert-card-title {
+  font-weight: 600;
+}
+
+.cert-card-meta,
+.cert-card-note {
+  color: var(--cert-muted);
+}
+
+.cert-card-note {
+  margin-block-start: 8px;
+}
+
+.cert-dialog {
+  inline-size: min(100% - 32px, 1040px);
+  max-inline-size: none;
+  max-block-size: calc(100dvh - 32px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cert-ink);
+}
+
+.cert-dialog::backdrop {
+  background: rgb(10 12 14 / 0.72);
+}
+
+.cert-dialog[open] {
+  animation: cert-in 150ms ease-out;
+}
+
+.cert-dialog-body {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--cert-radius, 4px);
+  background: var(--cert-bg);
+}
+
+.cert-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-inline-start: 4px;
+}
+
+.cert-dialog-title {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.cert-close {
+  flex: none;
+  min-block-size: 44px;
+  padding-inline: 16px;
+  border: 1px solid var(--cert-line);
+  border-radius: var(--cert-radius, 4px);
+  background: var(--cert-surface);
+  cursor: pointer;
+}
+
+.cert-dialog .cert-image {
+  inline-size: 100%;
+  max-block-size: calc(100dvh - 120px);
+  object-fit: contain;
+}
+
+.cert-card-large {
+  aspect-ratio: 1.414;
+  max-block-size: calc(100dvh - 120px);
+  padding: 24px;
+  font-size: 1rem;
+}
+
+@keyframes cert-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-preview,
+  .cert-preview.is-visible {
+    transform: none;
+    transition: none;
+  }
+
+  .cert-dialog[open] {
+    animation: none;
+  }
+}
