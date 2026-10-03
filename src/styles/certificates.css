@@ -1,4 +1,4 @@
-.cert-trigger {
+:where(.cert-trigger) {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -10,7 +10,7 @@
   cursor: pointer;
 }
 
-.cert-trigger > span {
+:where(.cert-trigger > span) {
   inline-size: fit-content;
 }
 

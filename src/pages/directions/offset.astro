@@ -1,0 +1,208 @@
+---
+import '@fontsource-variable/hanken-grotesk/wght.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../../styles/base.css';
+import '../../styles/offset.css';
+import Head from '../../components/Head.astro';
+import Certificates from '../../components/Certificates.astro';
+import ProjectLinks from '../../components/ProjectLinks.astro';
+import { getSite, getProjects } from '../../lib/site';
+
+const site = await getSite();
+const projects = await getProjects();
+const featured = projects.filter((project) => project.data.size === 'featured');
+const smaller = projects.filter((project) => project.data.size === 'small');
+---
+
+<html lang="en" dir="ltr">
+  <head>
+    <Head title={site.title} description={site.description} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="frame">
+      <header class="top">
+        <a class="wordmark" href="#main">{site.name}</a>
+        <nav aria-label="Primary">
+          <a href="#work">Work</a>
+          <a href="#experience">Experience</a>
+          <a href="#training">Training</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main">
+        <section class="hero">
+          <p class="label">Riyadh, Saudi Arabia</p>
+          <h1>{site.headline}</h1>
+          <div class="hero-text">
+            <p class="intro">{site.intro}</p>
+            <div class="actions">
+              <a class="button" href="#work">View projects</a>
+              <a class="button ghost" href={site.cv}>Download CV</a>
+              <a class="button ghost" href={`mailto:${site.email}`}>Email me</a>
+            </div>
+          </div>
+          <p class="proof">{site.proof}</p>
+        </section>
+
+        <section id="work" class="block" aria-labelledby="work-title">
+          <h2 id="work-title" class="label">Selected work</h2>
+          <ul class="work">
+            {
+              featured.map((project) => (
+                <li class="project">
+                  <div class="project-main">
+                    <h3>
+                      <a href={`/projects/${project.id}`}>{project.data.title}</a>
+                    </h3>
+                    <p>{project.data.oneLine}</p>
+                    <p class="stack">{project.data.stack.join(' / ')}</p>
+                  </div>
+                  <div class="project-side">
+                    {project.data.result && <p class="result">{project.data.result}</p>}
+                    <ProjectLinks links={project.data.links} />
+                  </div>
+                </li>
+              ))
+            }
+            {
+              smaller.map((project) => (
+                <li class="project small">
+                  <div class="project-main">
+                    <h3>
+                      <a href={`/projects/${project.id}`}>{project.data.title}</a>
+                    </h3>
+                    <p>{project.data.oneLine}</p>
+                  </div>
+                  <div class="project-side">
+                    <ProjectLinks links={project.data.links} />
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <section class="block" aria-labelledby="more-title">
+          <h2 id="more-title" class="label">More on GitHub</h2>
+          <dl class="pairs">
+            {
+              site.more.map((item) => (
+                <div>
+                  <dt>{item.name}</dt>
+                  <dd>{item.text}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </section>
+
+        <section class="block" aria-labelledby="about-title">
+          <h2 id="about-title" class="label">About</h2>
+          <p class="about">{site.about}</p>
+        </section>
+
+        <section id="experience" class="block" aria-labelledby="experience-title">
+          <h2 id="experience-title" class="label">Experience</h2>
+          <div>
+            {
+              site.experience.map((job) => (
+                <div class="entry">
+                  <div class="entry-head">
+                    <h3>{job.role}</h3>
+                    <p class="date">{job.period}</p>
+                  </div>
+                  <p class="muted">
+                    {job.company}, {job.place}
+                  </p>
+                  <ul class="points">
+                    {job.points.map((point) => (
+                      <li>{point}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="block" aria-labelledby="education-title">
+          <h2 id="education-title" class="label">Education</h2>
+          <div class="entry">
+            <div class="entry-head">
+              <h3>{site.education.degree}</h3>
+              <p class="date">Expected 2028</p>
+            </div>
+            <p class="muted">
+              {site.education.school}, {site.education.place}. {site.education.detail}
+            </p>
+            <p class="courses">Relevant courses: {site.education.courses}</p>
+          </div>
+        </section>
+
+        <section id="training" class="block" aria-labelledby="training-title">
+          <h2 id="training-title" class="label">Training and certifications</h2>
+          <Certificates items={site.training} />
+        </section>
+
+        <section class="block" aria-labelledby="activities-title">
+          <h2 id="activities-title" class="label">Activities</h2>
+          <ul class="points">
+            {site.activities.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+
+        <section id="contact" class="block contact" aria-labelledby="contact-title">
+          <h2 id="contact-title" class="label">Contact</h2>
+          <div>
+            <p class="contact-line">{site.contact}</p>
+            <div class="email-row">
+              <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+              <button type="button" class="copy" data-copy={site.email}>
+                <span class="copy-label">Copy email</span>
+              </button>
+              <span class="visually-hidden" role="status" data-copy-status></span>
+            </div>
+            <ul class="contact-links">
+              <li><a href={site.linkedin}>LinkedIn</a></li>
+              <li><a href={site.github}>GitHub</a></li>
+              <li><a href={site.cv}>Download CV</a></li>
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Built with Claude Code. <a href="https://github.com/wael-alanezi/portfolio">Source on GitHub</a>.</p>
+        <p class="mono">{site.name}, 2026</p>
+      </footer>
+    </div>
+
+    <script>
+      const button = document.querySelector<HTMLButtonElement>('[data-copy]');
+      const status = document.querySelector<HTMLElement>('[data-copy-status]');
+      const label = button?.querySelector<HTMLElement>('.copy-label');
+      let timer: number | undefined;
+
+      button?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(button.dataset.copy ?? '');
+          if (label) label.textContent = 'Copied';
+          if (status) status.textContent = 'Email address copied';
+          button.classList.add('is-done');
+        } catch {
+          if (label) label.textContent = 'Press Ctrl+C';
+          window.getSelection()?.selectAllChildren(document.querySelector('.email')!);
+        }
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          if (label) label.textContent = 'Copy email';
+          if (status) status.textContent = '';
+          button.classList.remove('is-done');
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>

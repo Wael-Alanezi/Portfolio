@@ -8,7 +8,7 @@ Writing rules:
 ## Site settings
 - Page title: `Wael Alanezi | Software Engineering student, Riyadh`
 - Meta description: `Software Engineering student at Prince Sultan University (AI & Data Science) who builds software for real operational problems. Projects, results and contact.`
-- Email to show: [pick one: wael.m.alanezi@gmail.com or wayelalanezi@gmail.com]
+- Email to show: wayelalanezi@gmail.com
 - LinkedIn: linkedin.com/in/wael-alanezi
 - GitHub: github.com/Wael-Alanezi
 - CV: /cv.pdf
