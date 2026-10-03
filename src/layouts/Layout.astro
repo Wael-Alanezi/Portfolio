@@ -1,0 +1,79 @@
+---
+import '@fontsource-variable/bricolage-grotesque/standard.css';
+import '@fontsource-variable/geist/wght.css';
+import '@fontsource-variable/alexandria/wght.css';
+import '@fontsource/ibm-plex-sans-arabic/arabic-400.css';
+import '@fontsource/ibm-plex-sans-arabic/arabic-500.css';
+import '../styles/base.css';
+import '../styles/site.css';
+import bricolageLatin from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-standard-normal.woff2?url';
+import geistLatin from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
+import { getSite } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const site = await getSite();
+const { title = site.title, description = site.description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+---
+
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href={geistLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bricolageLatin} as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#0f1716" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Rent & Build equipment page by Wael Alanezi" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+    <script>
+      const root = document.documentElement;
+      const toggles = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+      const label = () => {
+        const light = root.dataset.theme === 'light';
+        toggles.forEach((toggle) => {
+          toggle.textContent = light ? 'Dark theme' : 'Light theme';
+        });
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', light ? '#f4f6f5' : '#0f1716');
+      };
+      label();
+      toggles.forEach((toggle) =>
+        toggle.addEventListener('click', () => {
+          root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+          try {
+            localStorage.setItem('theme', root.dataset.theme);
+          } catch {}
+          label();
+        }),
+      );
+    </script>
+  </body>
+</html>

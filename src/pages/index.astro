@@ -1,37 +1,185 @@
 ---
-import '../styles/base.css';
-import Head from '../components/Head.astro';
+import Layout from '../layouts/Layout.astro';
+import Certificates from '../components/Certificates.astro';
+import ProjectLinks from '../components/ProjectLinks.astro';
+import { getSite, getProjects, projectImage } from '../lib/site';
 
-const directions = [
-  { href: '/directions/margin', name: 'Margin' },
-  { href: '/directions/spruce', name: 'Spruce' },
-  { href: '/directions/spread', name: 'Spread' },
-  { href: '/directions/offset', name: 'Offset' },
+const site = await getSite();
+const projects = await Promise.all(
+  (await getProjects()).map(async (project) => ({ ...project, picture: await projectImage(project.data.image) })),
+);
+
+const sections = [
+  { id: 'work', label: 'Work' },
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'training', label: 'Training' },
+  { id: 'contact', label: 'Contact' },
 ];
 ---
 
-<html lang="en" dir="ltr">
-  <head>
-    <Head title="Design directions" description="Four design directions for the portfolio." />
-    <style>
-      :root {
-        --bg: #fff;
-        --ink: #1c1d1f;
-        --focus: #1c1d1f;
-      }
-      body {
-        padding: 48px 16px;
-        font-family: system-ui, sans-serif;
-        background: var(--bg);
-        color: var(--ink);
-      }
-      li {
-        margin-block: 8px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Design directions</h1>
-    <ul>{directions.map((d) => <li><a href={d.href}>{d.name}</a></li>)}</ul>
-  </body>
-</html>
+<Layout>
+  <div class="shell">
+    <header class="side">
+      <a class="name" href="/">{site.name}</a>
+      <h1>{site.headline}</h1>
+      <p class="intro">{site.intro}</p>
+      <p class="proof">{site.proof}</p>
+      <div class="actions">
+        <a class="button primary" href="#work">View projects</a>
+        <a class="button" href={site.cv}>Download CV</a>
+        <a class="button" href={`mailto:${site.email}`}>Email me</a>
+      </div>
+      <nav class="toc" aria-label="Sections">
+        {
+          sections.map((section) => (
+            <a href={`#${section.id}`} data-section={section.id}>
+              {section.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="side-foot">
+        <a href={site.github}>GitHub</a>
+        <a href={site.linkedin}>LinkedIn</a>
+        <button type="button" class="theme" data-theme-toggle>Light theme</button>
+      </div>
+    </header>
+
+    <main id="main" class="main">
+      <section id="work" class="section" aria-labelledby="work-title">
+        <h2 id="work-title" class="section-title">Selected work</h2>
+        <ul class="work">
+          {
+            projects.map((project) => (
+              <li class="project">
+                <div class="project-media">
+                  <img
+                    src={project.picture.src}
+                    srcset={project.picture.srcset}
+                    sizes="(min-width: 1024px) 310px, (min-width: 768px) 45vw, 100vw"
+                    width={project.picture.width}
+                    height={project.picture.height}
+                    alt={project.data.imageAlt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="project-text">
+                  <h3>
+                    <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+                  </h3>
+                  <p>{project.data.oneLine}</p>
+                  {project.data.result && <p class="result">{project.data.result}</p>}
+                  {project.data.decision && (
+                    <p class="decision">
+                      <span>Design decision:</span> {project.data.decision}
+                    </p>
+                  )}
+                  <p class="stack">{project.data.stack.slice(0, 5).join(', ')}</p>
+                  <ProjectLinks links={[{ label: 'Case study', href: `/projects/${project.id}/` }, ...project.data.links]} />
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <h3 class="sub-title">More on GitHub</h3>
+        <dl class="pairs">
+          {
+            site.more.map((item) => (
+              <div>
+                <dt>{item.name}</dt>
+                <dd>{item.text}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <section id="about" class="section" aria-labelledby="about-title">
+        <h2 id="about-title" class="section-title">About</h2>
+        <p class="body">{site.about}</p>
+      </section>
+
+      <section id="experience" class="section" aria-labelledby="experience-title">
+        <h2 id="experience-title" class="section-title">Experience and education</h2>
+        {
+          site.experience.map((job) => (
+            <div class="entry">
+              <h3>{job.role}</h3>
+              <p class="date">{job.period}</p>
+              <p class="org">
+                {job.company}, {job.place}
+              </p>
+              <ul class="points">
+                {job.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+        <div class="entry">
+          <h3>{site.education.degree}</h3>
+          <p class="date">Expected 2028</p>
+          <p class="org">
+            {site.education.school}, {site.education.place}. {site.education.detail}
+          </p>
+          <p class="points">Relevant courses: {site.education.courses}</p>
+        </div>
+      </section>
+
+      <section id="training" class="section" aria-labelledby="training-title">
+        <h2 id="training-title" class="section-title">Training and certifications</h2>
+        <Certificates items={site.training} />
+        <h3 class="sub-title">Activities</h3>
+        <dl class="pairs">
+          {
+            site.activities.map((item) => (
+              <div>
+                <dt>{item.name}</dt>
+                <dd>{item.text}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <section id="contact" class="section" aria-labelledby="contact-title">
+        <h2 id="contact-title" class="section-title">Contact</h2>
+        <p class="body">{site.contact}</p>
+        <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+        <ul class="contact-links">
+          <li><a href={site.linkedin}>LinkedIn</a></li>
+          <li><a href={site.github}>GitHub</a></li>
+          <li><a href={site.cv}>Download CV</a></li>
+        </ul>
+      </section>
+
+      <footer class="footer">
+        Built with Claude Code. <a href="https://github.com/wael-alanezi/portfolio">Source on GitHub</a>.
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a')];
+
+    const mark = (id: string) => {
+      links.forEach((link) => {
+        if (link.dataset.section === id) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => entry.isIntersecting && mark(entry.target.id)),
+      { rootMargin: '-35% 0px -60% 0px' },
+    );
+
+    links.forEach((link) => {
+      const target = document.getElementById(link.dataset.section ?? '');
+      if (target) observer.observe(target);
+    });
+  </script>
+</Layout>

@@ -1,0 +1,94 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ProjectLinks from '../../components/ProjectLinks.astro';
+import { getSite, getProjects, projectImage } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { id: project.id },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+const { project, next } = Astro.props;
+const site = await getSite();
+const { Content } = await render(project);
+const data = project.data;
+const main = await projectImage(data.caseImage ?? data.image);
+const mainAlt = data.caseImageAlt ?? data.imageAlt;
+const poster = data.video ? `/projects/${data.video}-poster.webp` : undefined;
+---
+
+<Layout title={`${data.title} | ${site.name}`} description={data.oneLine}>
+  <div class="case">
+    <header class="case-top">
+      <a class="name" href="/">{site.name}</a>
+      <nav class="case-nav" aria-label="Primary">
+        <a href="/#work">All projects</a>
+        <button type="button" class="theme" data-theme-toggle>Light theme</button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <div class="case-head">
+        <h1>{data.title}</h1>
+        <p class="lede">{data.oneLine}</p>
+        <p class="case-meta">{data.context}</p>
+        {data.result && <p class="result">{data.result}</p>}
+        {
+          data.decision && (
+            <p class="decision">
+              <span>Design decision:</span> {data.decision}
+            </p>
+          )
+        }
+      </div>
+
+      <figure class="figure">
+        <img
+          src={main.src}
+          srcset={main.srcset}
+          sizes="(min-width: 768px) 704px, 100vw"
+          width={main.width}
+          height={main.height}
+          alt={mainAlt}
+          decoding="async"
+        />
+      </figure>
+
+      {
+        data.video && (
+          <figure class="figure">
+            <video controls muted loop playsinline preload="none" poster={poster} width="960" height="570" aria-describedby="video-caption">
+              <source src={`/projects/${data.video}.webm`} type="video/webm" />
+              <source src={`/projects/${data.video}.mp4`} type="video/mp4" />
+            </video>
+            <figcaption id="video-caption">{data.videoCaption}</figcaption>
+          </figure>
+        )
+      }
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <div class="case-foot">
+        <h2 class="section-title">Stack</h2>
+        <p>{data.stack.join(', ')}</p>
+        <h2 class="section-title">Links</h2>
+        <ProjectLinks links={data.links} />
+      </div>
+
+      <a class="next" href={`/projects/${next.id}/`}>
+        <span>Next project</span>
+        {next.data.title}
+      </a>
+    </main>
+
+    <footer class="footer">
+      Built with Claude Code. <a href="https://github.com/wael-alanezi/portfolio">Source on GitHub</a>.
+    </footer>
+  </div>
+</Layout>

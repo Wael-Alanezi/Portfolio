@@ -7,6 +7,11 @@ const link = z.object({
   href: z.string().optional(),
 });
 
+const item = z.object({
+  name: z.string(),
+  text: z.string(),
+});
+
 const projects = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/projects' }),
   schema: z.object({
@@ -16,6 +21,13 @@ const projects = defineCollection({
     oneLine: z.string(),
     context: z.string(),
     result: z.string().optional(),
+    decision: z.string().optional(),
+    image: z.string(),
+    imageAlt: z.string(),
+    caseImage: z.string().optional(),
+    caseImageAlt: z.string().optional(),
+    video: z.string().optional(),
+    videoCaption: z.string().optional(),
     stack: z.array(z.string()),
     links: z.array(link),
   }),
@@ -60,13 +72,8 @@ const site = defineCollection({
         alt: z.string(),
       }),
     ),
-    activities: z.array(z.string()),
-    more: z.array(
-      z.object({
-        name: z.string(),
-        text: z.string(),
-      }),
-    ),
+    activities: z.array(item),
+    more: z.array(item),
     contact: z.string(),
     footer: z.string(),
   }),

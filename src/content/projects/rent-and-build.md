@@ -4,14 +4,20 @@ order: 1
 size: featured
 oneLine: "A construction equipment rental marketplace for Saudi Arabia, built so two renters can never book the same machine for the same dates."
 context: "Designed as a team in SE201 at Prince Sultan University (6 students). I built the full-stack implementation, with Claude Code as an AI pair programmer."
-result: "Search p95 went from 2,743 ms to 259 ms on 100,000 listings."
+result: "Made search about 10× faster: 2.7 s to 0.26 s on 100,000 listings."
+image: rent-and-build.webp
+imageAlt: "Rent & Build equipment page: an excavator illustration next to the booking card with rental dates, the total price and a Request booking button"
+caseImage: rent-and-build-home.webp
+caseImageAlt: "Rent & Build home page with equipment search by type and city, and recently listed machines"
+video: rent-and-build-demo
+videoCaption: "Screen recording of Rent & Build: browsing equipment, requesting a booking, the owner approving it, and the renter paying."
 stack: [Java 21, Spring Boot, React, MySQL, Docker, GitHub Actions, Testcontainers, Playwright, k6, Moyasar (sandbox)]
 links:
   - label: Live demo [URL]
   - label: Code
     href: https://github.com/Wael-Alanezi/Rent-Build
   - label: Engineering decisions
-    href: https://github.com/Wael-Alanezi/Rent-Build/blob/main/DECISIONS.md
+    href: https://github.com/Wael-Alanezi/Rent-Build/blob/main/docs/DECISIONS.md
 ---
 
 ## Problem

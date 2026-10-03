@@ -8,7 +8,7 @@ cv: /cv.pdf
 
 headline: I build software that holds up in real operations.
 intro: "Software Engineering student at Prince Sultan University (AI & Data Science track) and land operations supervisor in Riyadh. Open to software engineering, data and AI internships for [season and year]."
-proof: "Most recent result: Rent & Build search went from 2,743 ms to 259 ms at p95 on 100,000 listings."
+proof: "Made search about 10× faster: 2.7 s to 0.26 s on 100,000 listings."
 
 about: "I work in land operations, so I see where processes break: [two or three real examples from your job]. That's what I like to build for. I'm studying Software Engineering at Prince Sultan University on the AI & Data Science track, graduating in 2028. My recent work covers a full-stack rental marketplace with measured performance, an AI price-comparison tool I evaluated with real statistics, and agentic AI systems that keep a human in the loop. I care about software that is correct, measured and useful to the people running the work."
 
@@ -26,7 +26,7 @@ education:
   degree: B.Sc. Software Engineering
   school: Prince Sultan University
   place: Riyadh
-  detail: AI & Data Science track, expected 2028.
+  detail: AI & Data Science track.
   courses: "Software Engineering, Data Structures, Human-Computer Interaction [edit as needed]"
 
 training:
@@ -57,8 +57,10 @@ training:
     alt: "Saudi Space Agency Space Academy certificate for Introduction to Space Mission Design, September 2026"
 
 activities:
-  - "Alenmaa Hackathon 2026: [your role and project]"
-  - "Project Management Club, Prince Sultan University: member"
+  - name: Alenmaa Hackathon 2026
+    text: "[your role and project]"
+  - name: Project Management Club, Prince Sultan University
+    text: Member
 
 more:
   - name: Word Frequency Analyzer

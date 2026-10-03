@@ -97,7 +97,7 @@
 }
 
 .cert-dialog::backdrop {
-  background: rgb(10 12 14 / 0.72);
+  background: rgb(6 10 9 / 0.8);
 }
 
 .cert-dialog[open] {
@@ -108,6 +108,7 @@
   display: grid;
   gap: 12px;
   padding: 12px;
+  border: 1px solid var(--cert-line);
   border-radius: var(--cert-radius, 4px);
   background: var(--cert-bg);
 }

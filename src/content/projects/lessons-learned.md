@@ -4,7 +4,9 @@ order: 3
 size: featured
 oneLine: "An AI assistant that helps project teams find and reuse lessons from past projects, and asks a person before saving new ones."
 context: "[Alenmaa Hackathon / SDAIA Academy capstone: write the accurate one], 2026. [Solo or team, and your role.]"
-result: "New lessons are saved only after a person approves them."
+decision: "New lessons are saved only after a person approves them."
+image: lessons-learned.webp
+imageAlt: "[Lessons Learned assistant screenshot]"
 stack: [Python, LangGraph, Chroma, Hugging Face embeddings, Streamlit]
 links:
   - label: Code
