@@ -1,0 +1,446 @@
+---
+import '@fontsource-variable/geist/wght.css';
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource-variable/fraunces/opsz.css';
+import '@fontsource-variable/bricolage-grotesque/standard.css';
+import '@fontsource/amiri/arabic-400.css';
+import '@fontsource-variable/noto-naskh-arabic/wght.css';
+import '@fontsource-variable/alexandria/wght.css';
+import '@fontsource/ibm-plex-sans-arabic/arabic-400.css';
+import '../../styles/base.css';
+import Head from '../../components/Head.astro';
+import { getSite } from '../../lib/site';
+
+const site = await getSite();
+const proof = 'Made search about 10× faster: 2.7 s to 0.26 s on 100,000 listings.';
+const arabicName = 'وائل العنزي';
+const arabicHeadline = 'أبني برمجيات تصمد في العمليات الحقيقية.';
+const arabicBody = 'طالب هندسة برمجيات في جامعة الأمير سلطان ومشرف عمليات ميدانية في الرياض.';
+
+const fonts = [
+  {
+    id: 'instrument',
+    name: 'Instrument Serif',
+    note: 'Condensed, high-contrast serif. Calm and editorial; only one weight, so the name and headline share it.',
+    display: "'Instrument Serif', serif",
+    arabic: 'Amiri',
+    arabicStack: "'Amiri', serif",
+    headlineSize: '52px',
+    tracking: '-0.01em',
+    weight: 400,
+  },
+  {
+    id: 'fraunces',
+    name: 'Fraunces',
+    note: 'Soft old-style serif with optical sizes. Warmer and more bookish; variable weight.',
+    display: "'Fraunces Variable', serif",
+    arabic: 'Noto Naskh Arabic',
+    arabicStack: "'Noto Naskh Arabic Variable', serif",
+    headlineSize: '48px',
+    tracking: '-0.02em',
+    weight: 450,
+  },
+  {
+    id: 'bricolage',
+    name: 'Bricolage Grotesque',
+    note: 'Characterful grotesk with ink traps. Closest to Geist, so the page stays more uniform.',
+    display: "'Bricolage Grotesque Variable', sans-serif",
+    arabic: 'Alexandria',
+    arabicStack: "'Alexandria Variable', sans-serif",
+    headlineSize: '48px',
+    tracking: '-0.03em',
+    weight: 600,
+  },
+];
+
+const accents = [
+  { id: 'sand', name: 'Sand', hex: '#D9B77E', light: '#7A5A24', onBg: '9.55', onRaised: '8.68', button: '9.55', lightRatio: '5.84', lightButton: '6.33' },
+  { id: 'brass', name: 'Brass', hex: '#CDBA8F', light: '#6B5C33', onBg: '9.54', onRaised: '8.67', button: '9.54', lightRatio: '6.04', lightButton: '6.55' },
+  { id: 'amber', name: 'Amber', hex: '#E9B44C', light: '#875A00', onBg: '9.61', onRaised: '8.74', button: '9.61', lightRatio: '5.54', lightButton: '6.01' },
+];
+
+const tags = ['Java 21', 'Spring Boot', 'React', 'MySQL', 'Docker'];
+---
+
+<html lang="en" dir="ltr">
+  <head>
+    <Head title="Spruce options" description="Accent and display font options for the Spruce direction." />
+    <style>
+      :root {
+        --bg: #0f1716;
+        --raised: #152120;
+        --ink: #e6ece9;
+        --muted: #97a4a0;
+        --line: #24312e;
+        --focus: #e6ece9;
+        --sans: 'Geist Variable', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+        color-scheme: dark;
+      }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .sheet {
+        max-inline-size: 1360px;
+        margin-inline: auto;
+        padding: 48px 40px 96px;
+      }
+      .sheet > h1 {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      .sheet > p {
+        margin-block-start: 8px;
+        max-inline-size: 70ch;
+        color: var(--muted);
+      }
+      .group {
+        margin-block-start: 64px;
+      }
+      .group > h2 {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--ink);
+      }
+      .group > p {
+        margin-block-start: 4px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .cols {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        margin-block-start: 24px;
+      }
+      .cell {
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .tag {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .tag b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .name {
+        margin-block-start: 24px;
+        font-size: 28px;
+        line-height: 1.1;
+      }
+      .headline {
+        margin-block-start: 20px;
+        line-height: 1.04;
+        text-wrap: balance;
+      }
+      .intro {
+        margin-block-start: 16px;
+        color: var(--muted);
+        max-inline-size: 60ch;
+      }
+      .arabic {
+        margin-block-start: 24px;
+        padding-block-start: 20px;
+        border-block-start: 1px solid var(--line);
+      }
+      .arabic .ar-name {
+        font-size: 28px;
+        line-height: 1.5;
+      }
+      .arabic .ar-headline {
+        font-size: 30px;
+        line-height: 1.5;
+      }
+      .arabic .ar-body {
+        margin-block-start: 6px;
+        color: var(--muted);
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        line-height: 1.8;
+      }
+      .rows {
+        display: grid;
+        gap: 24px;
+        margin-block-start: 24px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        gap: 56px;
+        padding: 32px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .proof {
+        margin-block-start: 16px;
+        color: var(--accent);
+        font-weight: 500;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-block-start: 24px;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: 44px;
+        padding-inline: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg);
+      }
+      .ratios {
+        display: grid;
+        gap: 2px;
+        margin-block-start: 24px;
+        font-size: 13px;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+      .swatch {
+        display: inline-block;
+        inline-size: 12px;
+        block-size: 12px;
+        margin-inline-end: 6px;
+        border-radius: 3px;
+        vertical-align: -1px;
+      }
+      .section-label {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--ink);
+        margin-block-end: 12px;
+      }
+      .project {
+        display: grid;
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: 24px;
+        margin-inline: -16px;
+        padding: 16px;
+        border-radius: 10px;
+        background: var(--raised);
+      }
+      .project img {
+        inline-size: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+      .project h3 {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .project p {
+        margin-block-start: 6px;
+        color: var(--muted);
+      }
+      .project .result {
+        color: var(--ink);
+        font-weight: 500;
+      }
+      .project .stack {
+        margin-block-start: 10px;
+        font-size: 13px;
+      }
+      .project .links {
+        display: flex;
+        gap: 16px;
+        margin-block-start: 10px;
+        font-size: 13px;
+      }
+      .project .links a {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+        text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+      }
+      .project .links span {
+        color: var(--muted);
+      }
+      .matrix {
+        display: grid;
+        grid-template-columns: 140px repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-block-start: 24px;
+        align-items: stretch;
+      }
+      .matrix .head {
+        font-size: 13px;
+        color: var(--muted);
+        align-self: end;
+      }
+      .mini {
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .mini .mini-name {
+        font-size: 28px;
+        line-height: 1.1;
+        color: var(--ink);
+      }
+      .mini .mini-proof {
+        margin-block-start: 10px;
+        font-size: 13px;
+        color: var(--accent);
+        font-weight: 500;
+      }
+      .mini .button {
+        margin-block-start: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="sheet">
+      <h1>Spruce refinements: options</h1>
+      <p>
+        Real content on the Spruce background (#0F1716). Pick one display font and one accent. Geist stays for body text. The Arabic lines are a test of
+        each companion font, not final copy.
+      </p>
+
+      <section class="group" aria-labelledby="fonts-title">
+        <h2 id="fonts-title">1. Display font for the name and headline</h2>
+        <p>Name at 28 px, headline at 48 px (Instrument Serif at 52 px to match its smaller x-height). Shown with the sand accent.</p>
+        <div class="cols">
+          {
+            fonts.map((font) => (
+              <article class="cell" style="--accent: #D9B77E">
+                <p class="tag">
+                  <b>{font.name}</b> with Arabic companion {font.arabic}
+                </p>
+                <p class="tag">{font.note}</p>
+                <p class="name" style={`font-family: ${font.display}; font-weight: ${font.weight}`}>
+                  {site.name}
+                </p>
+                <p
+                  class="headline"
+                  style={`font-family: ${font.display}; font-size: ${font.headlineSize}; letter-spacing: ${font.tracking}; font-weight: ${font.weight}`}
+                >
+                  {site.headline}
+                </p>
+                <p class="intro">{site.intro}</p>
+                <div class="arabic" lang="ar" dir="rtl">
+                  <p class="ar-name" style={`font-family: ${font.arabicStack}`}>
+                    {arabicName}
+                  </p>
+                  <p class="ar-headline" style={`font-family: ${font.arabicStack}`}>
+                    {arabicHeadline}
+                  </p>
+                  <p class="ar-body">{arabicBody}</p>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="group" aria-labelledby="accents-title">
+        <h2 id="accents-title">2. Accent replacing the mint</h2>
+        <p>Hero proof line, buttons and the Rent &amp; Build row at their real widths. Each light-theme partner is listed for later.</p>
+        <div class="rows">
+          {
+            accents.map((accent) => (
+              <article class="row" style={`--accent: ${accent.hex}`}>
+                <div>
+                  <p class="tag">
+                    <span class="swatch" style={`background: ${accent.hex}`} />
+                    <b>{accent.name}</b> {accent.hex}
+                  </p>
+                  <p class="proof">{proof}</p>
+                  <div class="actions">
+                    <a class="button primary" href="#accents-title">
+                      View projects
+                    </a>
+                    <a class="button" href="#accents-title">
+                      Download CV
+                    </a>
+                    <a class="button" href="#accents-title">
+                      Email me
+                    </a>
+                  </div>
+                  <div class="ratios">
+                    <span>Accent on background: {accent.onBg}:1</span>
+                    <span>Accent on hover row (#152120): {accent.onRaised}:1</span>
+                    <span>Background text on accent button: {accent.button}:1</span>
+                    <span>
+                      <span class="swatch" style={`background: ${accent.light}`} />
+                      Light theme {accent.light}: {accent.lightRatio}:1 on #F4F6F5, white text on it {accent.lightButton}:1
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <p class="section-label">Selected work</p>
+                  <div class="project">
+                    <img
+                      src="/projects/rent-and-build-640.webp"
+                      alt="Rent & Build equipment details page with photos, specifications, price and a booking form"
+                      width="640"
+                      height="400"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div>
+                      <h3>Rent &amp; Build</h3>
+                      <p>A construction equipment rental marketplace for Saudi Arabia, built so two renters can never book the same machine for the same dates.</p>
+                      <p class="result">{proof}</p>
+                      <p class="stack">{tags.join(', ')}</p>
+                      <div class="links">
+                        <a href="#accents-title">Case study</a>
+                        <a href="#accents-title">Code</a>
+                        <span>Live demo [URL]</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="group" aria-labelledby="matrix-title">
+        <h2 id="matrix-title">3. Every combination</h2>
+        <p>Name in each display font, with each accent on the proof line and primary button.</p>
+        <div class="matrix">
+          <span />
+          {fonts.map((font) => <span class="head">{font.name}</span>)}
+          {
+            accents.map((accent) => (
+              <>
+                <span class="head" style="align-self: center">
+                  {accent.name} {accent.hex}
+                </span>
+                {fonts.map((font) => (
+                  <div class="mini" style={`--accent: ${accent.hex}`}>
+                    <p class="mini-name" style={`font-family: ${font.display}; font-weight: ${font.weight}`}>
+                      {site.name}
+                    </p>
+                    <p class="mini-proof">{proof}</p>
+                    <span class="button primary">View projects</span>
+                  </div>
+                ))}
+              </>
+            ))
+          }
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
