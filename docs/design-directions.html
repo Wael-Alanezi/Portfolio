@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;600;700&family=Alexandria:wght@500;700&family=IBM+Plex+Sans:wght@400;600&family=Overpass:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root { --page: #ffffff; --text: #1a1a1a; --muted: #555; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --page: #161616; --text: #eee; --muted: #aaa; } }
+:root[data-theme="dark"] { --page: #161616; --text: #eee; --muted: #aaa; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--text); font: 16px/1.5 "IBM Plex Sans", sans-serif; }
+.wrap { max-width: 1120px; margin-inline: auto; padding: 32px 16px 64px; }
+.intro h1 { font-size: 1.6rem; margin: 0 0 4px; }
+.intro p { margin: 0 0 32px; color: var(--muted); }
+.dir { margin-block-end: 56px; }
+.dir > h2 { font-size: 1.25rem; margin: 0; }
+.dir > p { margin: 4px 0 16px; color: var(--muted); max-width: 70ch; }
+.frame { border-radius: 6px; overflow: hidden; outline: 1px solid #8884; }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; margin-block-start: 12px; }
+.sw { display: flex; align-items: center; gap: 6px; font-size: .8rem; color: var(--muted); }
+.sw i { width: 22px; height: 22px; border-radius: 3px; outline: 1px solid #8886; }
+
+.d1 { background: #F4F5F1; color: #1E2328; font-family: "Readex Pro", sans-serif; padding: 40px 28px; display: grid; gap: 32px; grid-template-columns: 1.1fr 1fr; align-items: end; }
+.d1 h3 { font-weight: 600; font-size: clamp(2rem, 4.6vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 16px; }
+.d1 p { color: #59626B; margin: 0 0 20px; max-width: 46ch; }
+.d1 .btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.d1 .btn { padding: 10px 16px; font-weight: 600; border: 2px solid #1E2328; border-radius: 2px; }
+.d1 .btn.p { background: #F2B705; border-color: #F2B705; }
+.board { background: #fff; border-inline-start: 6px solid #F2B705; }
+.row { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 14px 16px; }
+.row + .row { background: #F9FAF7; }
+.row b { font-weight: 600; }
+.row small { color: #59626B; grid-column: 1; }
+.row .res { grid-row: 1 / span 2; grid-column: 2; align-self: center; text-align: end; font-variant-numeric: tabular-nums; font-weight: 600; }
+.before { color: #A8261B; } .after { color: #12623F; }
+
+.d2 { background-color: #EDF1EC; background-image: linear-gradient(#C5D3CA 1px, transparent 1px), linear-gradient(90deg, #C5D3CA 1px, transparent 1px); background-size: 24px 24px; color: #17282E; font-family: "IBM Plex Sans", sans-serif; padding: 40px 28px; }
+.d2 h3 { font-family: "Alexandria", sans-serif; font-weight: 700; font-size: clamp(1.9rem, 4.4vw, 3.2rem); line-height: 1.1; margin: 0 0 12px; max-width: 18ch; }
+.d2 > p { color: #4A5A5E; max-width: 54ch; margin: 0 0 28px; background: #EDF1EC; }
+.plot { background: #EDF1EC; padding: 16px; max-width: 640px; outline: 1.5px solid #17282E; }
+.plot .lbl { font-weight: 600; margin-block-end: 8px; }
+.bar { display: grid; grid-template-columns: 4.5rem 1fr; align-items: center; gap: 10px; margin-block: 6px; font-variant-numeric: tabular-nums; }
+.track { display: flex; align-items: center; gap: 8px; font-size: .85rem; white-space: nowrap; }
+.track i { height: 22px; background: #17282E; flex: none; }
+.bar.a .track i { background: #0E6E66; }
+.note { color: #8C5300; font-size: .9rem; margin-block-start: 8px; }
+
+.d3 { background: #E6E8E4; color: #1A1D20; font-family: "Overpass", sans-serif; padding: 20px; }
+.sign { background: #0D5C3A; color: #fff; border-radius: 10px; padding: 32px 28px; box-shadow: inset 0 0 0 4px #0D5C3A, inset 0 0 0 7px #fff; }
+.sign h3 { font-weight: 800; font-size: clamp(2rem, 4.8vw, 3.6rem); line-height: 1.02; margin: 0 0 14px; max-width: 16ch; }
+.sign p { margin: 0 0 24px; max-width: 52ch; }
+.kerb { height: 6px; background: repeating-linear-gradient(90deg, #FFC72C 0 32px, transparent 32px 52px); margin-block-end: 20px; }
+.exits { display: flex; flex-wrap: wrap; gap: 8px; }
+.exit { border: 2px solid #fff; border-radius: 6px; padding: 8px 14px; font-weight: 600; }
+.exit.p { background: #FFC72C; color: #1A1D20; border-color: #FFC72C; }
+.signs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-block-start: 12px; }
+.mini { background: #fff; border-radius: 8px; padding: 14px 16px; border-block-start: 6px solid #0D5C3A; }
+.mini b { display: block; font-size: 1.1rem; }
+.mini .dist { display: flex; justify-content: space-between; margin-block-start: 10px; font-weight: 800; color: #0D5C3A; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 760px) { .d1 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="intro">
+    <h1>Three directions for the portfolio</h1>
+    <p>Static mock-ups of each hero, in its real palette and fonts. Pick one and I'll build it.</p>
+  </header>
+
+  <section class="dir">
+    <h2>1. Dispatch Board</h2>
+    <p>Operations runs on boards that show what is happening and whether it worked. The first screen is Wael's board, with each project as a job and its measured result.</p>
+    <div class="frame d1">
+      <div>
+        <h3>I build software that holds up in real operations.</h3>
+        <p>Software Engineering student at Prince Sultan University (AI &amp; Data Science track) and land operations supervisor in Riyadh.</p>
+        <div class="btns"><span class="btn p">View projects</span><span class="btn">Download CV</span><span class="btn">Email me</span></div>
+      </div>
+      <div class="board" aria-label="Project board">
+        <div class="row"><b>Rent &amp; Build</b><small>Search on 100,000 listings</small><span class="res"><span class="before">2,743 ms</span> to <span class="after">259 ms</span></span></div>
+        <div class="row"><b>Mubsir</b><small>Products found in testing</small><span class="res">28 of 33</span></div>
+        <div class="row"><b>Lessons Learned assistant</b><small>New lessons need approval</small><span class="res">Human gate</span></div>
+      </div>
+    </div>
+    <div class="swatches">
+      <span class="sw"><i style="background:#F4F5F1"></i>Board #F4F5F1</span>
+      <span class="sw"><i style="background:#1E2328"></i>Asphalt #1E2328</span>
+      <span class="sw"><i style="background:#59626B"></i>Steel #59626B</span>
+      <span class="sw"><i style="background:#F2B705"></i>Hi-vis #F2B705</span>
+      <span class="sw"><i style="background:#12623F"></i>Go #12623F</span>
+      <span class="sw"><i style="background:#A8261B"></i>Hold #A8261B</span>
+    </div>
+  </section>
+
+  <section class="dir">
+    <h2>2. Measured</h2>
+    <p>Wael measures before he changes anything. The site reads like an engineer's plotted log on grid paper, and every result is drawn to scale.</p>
+    <div class="frame d2">
+      <h3>I build software that holds up in real operations.</h3>
+      <p>Software Engineering student at Prince Sultan University (AI &amp; Data Science track) and land operations supervisor in Riyadh.</p>
+      <div class="plot" role="img" aria-label="Rent and Build search p95: 2,743 milliseconds before, 259 milliseconds after">
+        <div class="lbl">Rent &amp; Build search, p95</div>
+        <div class="bar"><span>Before</span><span class="track"><i style="width:calc((100% - 5.5rem) * 1)"></i>2,743 ms</span></div>
+        <div class="bar a"><span>After</span><span class="track"><i style="width:calc((100% - 5.5rem) * .0944)"></i>259 ms</span></div>
+        <div class="note">k6, 20 virtual users, 100,000 listings, one 4-core VM</div>
+      </div>
+    </div>
+    <div class="swatches">
+      <span class="sw"><i style="background:#EDF1EC"></i>Grid paper #EDF1EC</span>
+      <span class="sw"><i style="background:#C5D3CA"></i>Grid line #C5D3CA</span>
+      <span class="sw"><i style="background:#17282E"></i>Ink #17282E</span>
+      <span class="sw"><i style="background:#4A5A5E"></i>Graphite #4A5A5E</span>
+      <span class="sw"><i style="background:#0E6E66"></i>Plot teal #0E6E66</span>
+      <span class="sw"><i style="background:#8C5300"></i>Ochre #8C5300</span>
+    </div>
+  </section>
+
+  <section class="dir">
+    <h2>3. Wayfinding</h2>
+    <p>Land operations is about routes and sites, so the site borrows from Saudi highway signs: one big sign panel, then a project sign for each stop.</p>
+    <div class="frame d3">
+      <div class="sign">
+        <h3>I build software that holds up in real operations.</h3>
+        <p>Software Engineering student at Prince Sultan University (AI &amp; Data Science track) and land operations supervisor in Riyadh.</p>
+        <div class="kerb"></div>
+        <div class="exits"><span class="exit p">View projects</span><span class="exit">Download CV</span><span class="exit">Email me</span></div>
+      </div>
+      <div class="signs">
+        <div class="mini"><b>Rent &amp; Build</b>Equipment rental marketplace<div class="dist"><span>Search p95</span><span>259 ms</span></div></div>
+        <div class="mini"><b>Mubsir</b>AI price comparison<div class="dist"><span>Found</span><span>28 of 33</span></div></div>
+        <div class="mini"><b>Lessons Learned</b>Agentic RAG assistant<div class="dist"><span>New lessons</span><span>Approved</span></div></div>
+      </div>
+    </div>
+    <div class="swatches">
+      <span class="sw"><i style="background:#E6E8E4"></i>Concrete #E6E8E4</span>
+      <span class="sw"><i style="background:#1A1D20"></i>Asphalt #1A1D20</span>
+      <span class="sw"><i style="background:#575E62"></i>Kerb grey #575E62</span>
+      <span class="sw"><i style="background:#0D5C3A"></i>Sign green #0D5C3A</span>
+      <span class="sw"><i style="background:#FFFFFF"></i>Sign white #FFFFFF</span>
+      <span class="sw"><i style="background:#FFC72C"></i>Route yellow #FFC72C</span>
+    </div>
+  </section>
+</div>
+</body>
+</html>
