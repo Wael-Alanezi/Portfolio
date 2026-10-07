@@ -138,9 +138,11 @@
 }
 
 .cert-dialog .cert-image {
-  inline-size: 100%;
+  inline-size: auto;
+  block-size: auto;
+  max-inline-size: 100%;
   max-block-size: calc(100dvh - 120px);
-  object-fit: contain;
+  margin-inline: auto;
 }
 
 .cert-card-large {

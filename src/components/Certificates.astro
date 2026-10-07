@@ -1,6 +1,7 @@
 ---
 import fs from 'node:fs';
 import path from 'node:path';
+import sharp from 'sharp';
 import '../styles/certificates.css';
 
 interface Item {
@@ -18,16 +19,22 @@ interface Props {
 const { items } = Astro.props;
 const folder = path.join(process.cwd(), 'public', 'certificates');
 
-const certificates = items.map((item) => {
-  const hasFull = fs.existsSync(path.join(folder, item.image));
-  const hasThumb = fs.existsSync(path.join(folder, 'thumbs', item.image));
-  return {
-    ...item,
-    meta: `${item.issuer}, ${item.date}`,
-    full: hasFull ? `/certificates/${item.image}` : '',
-    thumb: hasThumb ? `/certificates/thumbs/${item.image}` : hasFull ? `/certificates/${item.image}` : '',
-  };
-});
+const certificates = await Promise.all(
+  items.map(async (item) => {
+    const file = path.join(folder, item.image);
+    const hasFull = fs.existsSync(file);
+    const hasThumb = fs.existsSync(path.join(folder, 'thumbs', item.image));
+    const { width = 1414, height = 1000 } = hasFull ? await sharp(file).metadata() : {};
+    return {
+      ...item,
+      meta: `${item.issuer}, ${item.date}`,
+      full: hasFull ? `/certificates/${item.image}` : '',
+      thumb: hasThumb ? `/certificates/thumbs/${item.image}` : hasFull ? `/certificates/${item.image}` : '',
+      width,
+      height,
+    };
+  }),
+);
 ---
 
 <ul class="certs" data-certs>
@@ -43,6 +50,8 @@ const certificates = items.map((item) => {
           data-alt={item.alt}
           data-full={item.full}
           data-thumb={item.thumb}
+          data-width={item.width}
+          data-height={item.height}
         >
           <span class="cert-title">{item.title}</span>
           <span class="cert-meta">{item.meta}</span>
@@ -94,6 +103,8 @@ const certificates = items.map((item) => {
       card.querySelector('.cert-card-title')!.textContent = trigger.dataset.title ?? '';
       card.querySelector('.cert-card-meta')!.textContent = trigger.dataset.meta ?? '';
       if (src) {
+        image.width = Number(trigger.dataset.width);
+        image.height = Number(trigger.dataset.height);
         image.src = src;
         image.alt = trigger.dataset.alt ?? '';
         image.hidden = false;
@@ -144,6 +155,9 @@ const certificates = items.map((item) => {
     const show = (trigger: HTMLButtonElement) => {
       if (current === trigger) return;
       current = trigger;
+      const ratio = Number(trigger.dataset.width) / Number(trigger.dataset.height);
+      preview.style.aspectRatio = String(ratio);
+      preview.style.inlineSize = ratio >= 1 ? '240px' : `${Math.round(300 * ratio)}px`;
       fill(preview, trigger, trigger.dataset.thumb ?? '');
       place(trigger);
       preview.classList.add('is-visible');
