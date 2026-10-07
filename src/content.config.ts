@@ -17,6 +17,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     order: z.number(),
+    published: z.boolean().default(true),
     size: z.enum(['featured', 'small']),
     oneLine: z.string(),
     context: z.string(),

@@ -10,7 +10,7 @@ export async function getSite() {
 }
 
 export async function getProjects() {
-  const projects = await getCollection('projects');
+  const projects = await getCollection('projects', (project) => project.data.published);
   return projects.sort((a, b) => a.data.order - b.data.order);
 }
 

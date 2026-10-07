@@ -1,4 +1,5 @@
 ---
+published: false
 title: Lessons Learned assistant
 order: 3
 size: featured

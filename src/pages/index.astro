@@ -87,17 +87,9 @@ const sections = [
             ))
           }
         </ul>
-        <h3 class="sub-title">More on GitHub</h3>
-        <dl class="pairs">
-          {
-            site.more.map((item) => (
-              <div>
-                <dt translate="no">{item.name}</dt>
-                <dd>{item.text}</dd>
-              </div>
-            ))
-          }
-        </dl>
+        <p class="more-soon">
+          More projects are on the way. Until then, my code is on <a href={site.github}>GitHub</a>.
+        </p>
       </section>
 
       <section id="about" class="section" aria-labelledby="about-title">
@@ -161,10 +153,6 @@ const sections = [
           <li><a href={site.cv}>Download CV</a></li>
         </ul>
       </section>
-
-      <footer class="footer">
-        Built with Claude Code. <a href="https://github.com/wael-alanezi/portfolio">Source on GitHub</a>.
-      </footer>
     </main>
   </div>
 

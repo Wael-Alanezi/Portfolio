@@ -81,14 +81,14 @@ const poster = data.video ? `/projects/${data.video}-poster.webp` : undefined;
         <ProjectLinks links={data.links} />
       </div>
 
-      <a class="next" href={`/projects/${next.id}/`}>
-        <span class="next-label">Next project</span>
-        <span translate="no">{next.data.title}</span>
-      </a>
+      {
+        next.id !== project.id && (
+          <a class="next" href={`/projects/${next.id}/`}>
+            <span class="next-label">Next project</span>
+            <span translate="no">{next.data.title}</span>
+          </a>
+        )
+      }
     </main>
-
-    <footer class="footer">
-      Built with Claude Code. <a href="https://github.com/wael-alanezi/portfolio">Source on GitHub</a>.
-    </footer>
   </div>
 </Layout>

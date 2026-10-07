@@ -1,4 +1,5 @@
 ---
+published: false
 title: Mubsir
 order: 2
 size: featured

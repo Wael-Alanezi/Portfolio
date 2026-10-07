@@ -1,4 +1,5 @@
 ---
+published: false
 title: Agentic personal assistant
 order: 4
 size: small
