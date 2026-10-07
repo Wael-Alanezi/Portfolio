@@ -101,3 +101,15 @@ Bricolage uses its variable `opsz`, `wdth` and `wght` axes, with `font-optical-s
 - **What:** The Tuwaiq Academy certificate showed Wael's national ID number. That line was covered with white before publishing, and the image's grey outer frame was cropped. Name, course, dates and the verification code are unchanged.
 - **Why:** The site is public, and a national ID number does not belong on it.
 - **Alternative rejected:** Publishing the certificate as received.
+
+## Profile without the operations job (Wael's request)
+- **What:**
+  - Removed the land operations supervisor role from the intro, the About paragraph and the Experience section. With no jobs listed, that section is titled "Education", and so is its sidebar link. Adding a job back in `home.yaml` restores "Experience and education".
+  - Rewrote About from facts in the brief and the CV: the degree, building and measuring software, Rent & Build's faster search, testing Mubsir with statistics, agentic AI with a person in the loop, and explaining results in Arabic and English.
+  - Changed the meta description from "real operational problems" to "builds data and AI software and measures whether it works".
+  - Activities now gives Wael's Alenmaa Hackathon role: backend developer and tester on Mubsir.
+- **Why:** Wael wants the site to focus on his software work rather than his current job.
+
+## Certificate shapes
+- **What:** The certificate component reads each image's real width and height at build time. The hover preview keeps landscape certificates 240 px wide and portrait ones 300 px tall, and the lightbox shows the whole image without cropping.
+- **Why:** The ECCMA certificate is portrait, and a fixed landscape box would have cropped most of it.
