@@ -557,11 +557,15 @@ a {
   }
 
   .toc {
-    margin-block-start: var(--space-5);
+    margin-block-start: var(--space-4);
   }
 
   .toc a {
     padding-block: 2px;
+  }
+
+  .side-foot {
+    padding-block-start: var(--space-4);
   }
 
   .main {
