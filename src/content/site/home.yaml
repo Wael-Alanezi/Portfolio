@@ -19,7 +19,7 @@ education:
   school: Prince Sultan University
   place: Riyadh
   detail: AI & Data Science track.
-  courses: "Software Engineering, Data Structures, Human-Computer Interaction [edit as needed]"
+  courses: "Data structures and complexity analysis, software engineering and UML, and 3-tier architecture."
 
 training:
   - title: Building Agentic AI Systems
