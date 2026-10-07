@@ -91,3 +91,13 @@ Bricolage uses its variable `opsz`, `wdth` and `wght` axes, with `font-optical-s
   - `theme-color` set before the first paint for the light theme.
 - **Already met:** keyboard use and focus management, visible focus rings, hit targets (24 px on desktop, 44 px on phones), reduced motion, image dimensions, font preloading, `color-scheme`, skip link and heading order.
 - **Not applied:** the Forms section (the site has no forms) and the Vercel-specific copywriting preferences (Title Case, "&" for "and"), which the guidelines mark as Vercel's own brand choices rather than universal rules. The site keeps sentence case, as the guidelines recommend for marketing pages.
+
+## Projects, footer, CV and certificates (Wael's request)
+- **What:** Only Rent & Build is published. Mubsir, Lessons Learned and the agentic assistant are kept in `src/content/projects/` with `published: false`, so they have no page, no sitemap entry and no card. "More on GitHub" was replaced by one line saying more projects are on the way, with a link to GitHub. The "Built with Claude Code" footer was removed from every page. Wael's CV is at `public/cv.pdf`. Four certificate images were added as WebP; ECCMA still shows its placeholder card.
+- **Why:** Wael asked for these changes. A `published` flag keeps the written content, so a project comes back by changing one line.
+- **Alternative rejected:** Deleting the hidden project files.
+
+## Personal data on certificates
+- **What:** The Tuwaiq Academy certificate showed Wael's national ID number. That line was covered with white before publishing, and the image's grey outer frame was cropped. Name, course, dates and the verification code are unchanged.
+- **Why:** The site is public, and a national ID number does not belong on it.
+- **Alternative rejected:** Publishing the certificate as received.
