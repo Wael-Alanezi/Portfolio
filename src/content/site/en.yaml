@@ -19,7 +19,9 @@ nav:
   languageLabel: "العربية"
 
 hero:
-  coordinates: "24.7136° N, 46.6753° E · Riyadh"
+  coordinates: "24.7346° N, 46.6982° E · Prince Sultan University, Riyadh"
+  mapsUrl: https://www.google.com/maps?q=24.73461,46.69823
+  newTab: "(opens in a new tab)"
   eyebrow: "AI and Data Science · Prince Sultan University"
   eyebrowShort: "AI and Data Science · PSU"
   role: Software Engineering Student

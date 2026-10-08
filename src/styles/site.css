@@ -355,8 +355,23 @@ a {
   position: absolute;
   inset-block-start: 78px;
   inset-inline-start: 20px;
+  z-index: 2;
   color: var(--mint);
   font-size: 0.75rem;
+}
+
+.coords a {
+  display: inline-block;
+  padding-block: 13px;
+  margin-block: -13px;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgb(159 225 203 / 0.4);
+}
+
+.coords a:hover {
+  color: var(--cream);
+  text-decoration-color: currentColor;
 }
 
 .hero-text {

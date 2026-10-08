@@ -127,7 +127,11 @@ const chips = [
 
       <div class="hero-overlay" aria-hidden="true"></div>
       <div class="scan" aria-hidden="true"><span>{t.hero.scan}</span></div>
-      <p class="coords">{t.hero.coordinates}</p>
+      <p class="coords">
+        <a href={t.hero.mapsUrl} target="_blank" rel="noopener noreferrer">
+          {t.hero.coordinates}<span class="visually-hidden"> {t.hero.newTab}</span>
+        </a>
+      </p>
 
       <div class="hero-text">
         <p class="eyebrow">

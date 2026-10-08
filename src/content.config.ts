@@ -74,6 +74,8 @@ const site = defineCollection({
     }),
     hero: z.object({
       coordinates: z.string(),
+      mapsUrl: z.string(),
+      newTab: z.string(),
       eyebrow: z.string(),
       eyebrowShort: z.string(),
       role: z.string(),
