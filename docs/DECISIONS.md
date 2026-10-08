@@ -113,3 +113,19 @@ Bricolage uses its variable `opsz`, `wdth` and `wght` axes, with `font-optical-s
 ## Certificate shapes
 - **What:** The certificate component reads each image's real width and height at build time. The hover preview keeps landscape certificates 240 px wide and portrait ones 300 px tall, and the lightbox shows the whole image without cropping.
 - **Why:** The ECCMA certificate is portrait, and a fixed landscape box would have cropped most of it.
+
+## Redesign: satellite view of Riyadh (portfolio-design-spec.md)
+- **What:** Replaced the Spruce sidebar design with the spec's satellite-map design: Cairo for both scripts, deep teal and gold tokens, a seeded map grid drawn in code, project pins, a layers map with Skills, Projects and Goals chips, a project detail view, a bento project grid, and About with a contact card. Built English at `/` and Arabic at `/ar/` from one component, with `lang` and `dir` set and the chosen language remembered in local storage.
+- **Wael's answers:** use the new design; show Rent & Build, NDVI drone (in progress with his team), Mubsir, Lessons Learned and the agentic assistant; email wael.m.alanezi@gmail.com; the spec's About text; build the Arabic version now. He later added his phone number to the contact card.
+- **Kept from the existing site:** the CV, all real project details and results, the Rent & Build images, video and case study, and the certificates with their hover preview and lightbox (restyled in a new "Training and certifications" section, which the spec doesn't cover).
+
+## Redesign details decided where the spec is silent
+- **Detail view:** every project has a panel; the NDVI drone shows by default, and pins and links switch panels with `#project-<id>` through CSS `:target`, so it works without JavaScript and each project can be linked directly. Pins that open projects are links; skill and goal pins are labels.
+- **Responsive hero:** the desktop layout starts at 1100 px. Map overlays (roads, rings, pins) use the spec's coordinates as percentages of a 1440 × 900 stage anchored to the inline end, so they scale down on smaller laptops while the text stays fixed. Below 1100 px the 390 × 844 mobile layout is used. Arabic mobile pins mirror the English ones.
+- **Line height:** hero text uses 1.874, Cairo's auto line height in Figma, so lines sit where the spec places them.
+- **Case studies:** stay in English. Arabic buttons say so: "دراسة الحالة الكاملة (بالإنجليزية)".
+- **Card and detail text:** the spec's short card summaries, and the existing one-line descriptions on detail panels where the spec gives none. Project titles follow the spec ("Agentic RAG personal assistant", "Lessons learned for PMOs"), except Rent & Build, which keeps its real name.
+- **Removed placeholders:** Mubsir's "[one sentence on how it works]" and "[Code or demo video, if public]", and the agentic assistant's "[Say what the human approves.]", because the facts aren't known. Lessons Learned's context and "What I learned" now use facts from Wael's CV and his own list of options.
+- **Arabic coordinates:** use left-to-right marks around each number, so the degree sign stays on the correct side.
+- **Social image and favicon:** redrawn in the new palette with no text: a pinned map grid and a gold pin.
+- **Contrast:** every spec colour pair passes WCAG AA on its background (lowest 4.79:1), so the spec's opacities are kept as they are.
