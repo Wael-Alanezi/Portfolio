@@ -1,0 +1,421 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MapGrid from './MapGrid.astro';
+import Pin from './Pin.astro';
+import ProjectVisual from './ProjectVisual.astro';
+import Certificates from './Certificates.astro';
+import Icon from './Icon.astro';
+import { getSite, getProjects, localize, projectImage, type Lang } from '../lib/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = await getSite(lang);
+const rtl = lang === 'ar';
+const projects = await Promise.all(
+  (await getProjects()).map(async (project) => ({
+    ...localize(project, lang),
+    picture: project.data.image ? await projectImage(project.data.image) : undefined,
+  })),
+);
+const byId = Object.fromEntries(projects.map((project) => [project.id, project]));
+const other = rtl ? '/' : '/ar/';
+const otherLang = rtl ? 'en' : 'ar';
+const defaultProject = 'ndvi-drone';
+const pinName = (id: string) => `${t.layers.openProject} ${byId[id]?.title ?? t.pins[id]}`;
+const flip = (side: 'left' | 'right') => (side === 'left' ? 'right' : 'left');
+const pct = (value: number, total: number) => `${+((value / total) * 100).toFixed(3)}%`;
+
+const heroPins = (
+  rtl
+    ? [
+        { id: 'agentic-assistant', x: 330, y: 230, side: 'left' },
+        { id: 'mubsir', x: 190, y: 560, side: 'left' },
+        { id: 'ndvi-drone', x: 440, y: 600, side: 'left', cross: true },
+      ]
+    : [
+        { id: 'agentic-assistant', x: 1010, y: 230, side: 'right' },
+        { id: 'mubsir', x: 1250, y: 560, side: 'right' },
+        { id: 'ndvi-drone', x: 900, y: 600, side: 'right', cross: true },
+      ]
+) as { id: string; x: number; y: number; side: 'left' | 'right'; cross?: boolean }[];
+
+const mobilePins = (
+  [
+    { id: 'agentic-assistant', x: 120, y: 150, side: 'right' },
+    { id: 'mubsir', x: 310, y: 250, side: 'left' },
+    { id: 'ndvi-drone', x: 110, y: 320, side: 'right' },
+  ] as { id: string; x: number; y: number; side: 'left' | 'right' }[]
+).map((pin) => (rtl ? { ...pin, x: 390 - pin.x, side: flip(pin.side) } : pin));
+
+const roadV = rtl ? 380 : 1060;
+const roads = [
+  { x: 0, y: 468, w: 1440, h: 3 },
+  { x: roadV, y: 0, w: 3, h: 900 },
+  { x: rtl ? 0 : 560, y: 690, w: 880, h: 2 },
+];
+const mobileRoadV = rtl ? 150 : 240;
+
+type LayerPin = { label: string; layer: 'skills' | 'projects' | 'goals'; x: number; y: number; mx: number; my: number; mside?: 'left' | 'right'; id?: string };
+const layerPins: LayerPin[] = [
+  { label: t.layers.skillPins[0], layer: 'skills', x: 130, y: 110, mx: 8, my: 8 },
+  { label: t.layers.skillPins[1], layer: 'skills', x: 360, y: 340, mx: 60, my: 56 },
+  { label: t.layers.skillPins[2], layer: 'skills', x: 640, y: 90, mx: 58, my: 8 },
+  { label: t.pins['agentic-assistant'], layer: 'projects', x: 290, y: 210, mx: 10, my: 24, id: 'agentic-assistant' },
+  { label: t.pins['mubsir'], layer: 'projects', x: 560, y: 250, mx: 10, my: 46, id: 'mubsir' },
+  { label: t.pins['ndvi-drone'], layer: 'projects', x: 820, y: 190, mx: 52, my: 34, id: 'ndvi-drone' },
+  { label: t.pins['rent-and-build'], layer: 'projects', x: 980, y: 340, mx: 12, my: 68, id: 'rent-and-build' },
+  { label: t.layers.goalPins[0], layer: 'goals', x: 140, y: 390, mx: 8, my: 88 },
+  { label: t.layers.goalPins[1], layer: 'goals', x: 1010, y: 100, mx: 92, my: 78, mside: 'left' },
+];
+
+const chips = [
+  { layer: 'skills', label: t.layers.skills, color: '#5EEAD4', on: false },
+  { layer: 'projects', label: t.layers.projects, color: '#C9A24B', on: true },
+  { layer: 'goals', label: t.layers.goals, color: '#F0997B', on: false },
+];
+---
+
+<Layout title={t.title} description={t.description} lang={lang} alternates={{ en: '/', ar: '/ar/' }} skip={t.skipToContent}>
+  <header class="nav">
+    <a class="brand" href={rtl ? '/ar/' : '/'}>{t.name}</a>
+    <nav class="nav-links" aria-label={t.nav.projects}>
+      <a href="#projects">{t.nav.projects}</a>
+      <a href="#about">{t.nav.about}</a>
+      <a href="#contact">{t.nav.contact}</a>
+    </nav>
+    <div class="nav-end">
+      <a class="lang-pill" href={other} hreflang={otherLang} data-set-lang={otherLang}>
+        <span dir="ltr">{t.nav.language}</span>
+        <span class="visually-hidden" lang={otherLang}>{t.nav.languageLabel}</span>
+      </a>
+      <button type="button" class="menu-button" aria-haspopup="dialog" aria-controls="menu" aria-label={t.nav.menu} data-menu-open>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <dialog id="menu" class="menu" aria-label={t.nav.menu}>
+    <div class="menu-top">
+      <span class="brand">{t.name}</span>
+      <button type="button" class="menu-close" aria-label={t.nav.close} data-menu-close>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+    </div>
+    <nav class="menu-links" aria-label={t.nav.projects}>
+      <a href="#projects" data-menu-close>{t.nav.projects}</a>
+      <a href="#about" data-menu-close>{t.nav.about}</a>
+      <a href="#contact" data-menu-close>{t.nav.contact}</a>
+    </nav>
+    <a class="lang-pill menu-lang" href={other} hreflang={otherLang} data-set-lang={otherLang}>
+      <span dir="ltr">{t.nav.language}</span>
+      <span class="visually-hidden" lang={otherLang}>{t.nav.languageLabel}</span>
+    </a>
+  </dialog>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-name">
+      <div class="hero-map" aria-hidden="true">
+        <MapGrid class="map-d" cols={54} rows={19} cell={48} gap={2} />
+        <MapGrid class="map-m" cols={37} rows={29} cell={30} gap={2} />
+      </div>
+
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="scan" aria-hidden="true"><span>{t.hero.scan}</span></div>
+      <p class="coords">{t.hero.coordinates}</p>
+
+      <div class="hero-text">
+        <p class="eyebrow">
+          <span class="only-d">{t.hero.eyebrow}</span><span class="only-m">{t.hero.eyebrowShort}</span>
+        </p>
+        <h1 id="hero-name">{t.name}</h1>
+        <p class="role">{t.hero.role}</p>
+        <p class="tagline">
+          <span class="only-d">{t.hero.tagline}</span><span class="only-m">{t.hero.taglineShort}</span>
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects">{t.hero.viewProjects}</a>
+          <a class="btn btn-secondary" href={t.cv}>{t.hero.downloadCv}</a>
+        </div>
+        <a class="skip" href="#projects">{t.hero.skip}</a>
+      </div>
+
+      <div class="stage stage-d">
+        {
+          roads.map((road) => (
+            <span
+              class="road"
+              aria-hidden="true"
+              style={`left: ${pct(road.x, 1440)}; top: ${pct(road.y, 900)}; width: ${road.w > 3 ? pct(road.w, 1440) : `${road.w}px`}; height: ${road.h > 3 ? pct(road.h, 900) : `${road.h}px`}`}
+            />
+          ))
+        }
+        {
+          [380, 700].map((size) => (
+            <span class="ring" aria-hidden="true" style={`left: ${pct(roadV, 1440)}; top: ${pct(470, 900)}; width: ${pct(size, 1440)}`} />
+          ))
+        }
+        {
+          heroPins.map((pin) => (
+            <Pin
+              label={t.pins[pin.id]}
+              layer="projects"
+              x={pct(pin.x, 1440)}
+              y={pct(pin.y, 900)}
+              side={pin.side}
+              href={`#project-${pin.id}`}
+              name={pinName(pin.id)}
+              cross={pin.cross}
+            />
+          ))
+        }
+      </div>
+
+      <div class="stage stage-m">
+        <span class="road" aria-hidden="true" style="left: 0; top: 270px; width: 100%; height: 2px" />
+        <span class="road" aria-hidden="true" style={`left: ${mobileRoadV}px; top: 0; width: 2px; height: 560px`} />
+        <span class="ring" aria-hidden="true" style={`left: ${mobileRoadV}px; top: 270px; width: 260px`} />
+        {
+          mobilePins.map((pin) => (
+            <Pin
+              label={t.pins[pin.id]}
+              layer="projects"
+              x={`${pin.x}px`}
+              y={`${pin.y}px`}
+              side={pin.side}
+              href={`#project-${pin.id}`}
+              name={pinName(pin.id)}
+              small
+            />
+          ))
+        }
+      </div>
+
+      <div class="hero-bar">
+        <p>{t.hero.note}</p>
+        <a href="#layers">{t.hero.explore}</a>
+      </div>
+    </section>
+
+    <section id="layers" class="section layers" aria-labelledby="layers-title">
+      <h2 id="layers-title" class="section-title layers-title">{t.layers.title}</h2>
+      <p class="section-sub">{t.layers.subtitle}</p>
+      <div class="layer-chips">
+        {
+          chips.map((chip) => (
+            <button type="button" class="layer-chip" data-layer-toggle={chip.layer} aria-pressed={chip.on ? 'true' : 'false'} style={`--c: ${chip.color}`}>
+              <span class="layer-dot" aria-hidden="true" />
+              {chip.label}
+            </button>
+          ))
+        }
+      </div>
+      <div class="layer-map" data-layer-map>
+        <MapGrid class="layer-grid" cols={32} rows={14} cell={40} gap={2} />
+        {
+          layerPins.map((pin) => {
+            const x = rtl ? 1264 - pin.x : pin.x;
+            const mx = rtl ? 100 - pin.mx : pin.mx;
+            const mside = pin.mside ? (rtl ? flip(pin.mside) : pin.mside) : rtl ? 'left' : undefined;
+            return (
+              <Pin
+                label={pin.label}
+                layer={pin.layer}
+                x={pct(x, 1264)}
+                y={pct(pin.y, 480)}
+                mx={`${mx}%`}
+                my={`${pin.my}%`}
+                side={rtl ? 'left' : 'right'}
+                mside={mside}
+                href={pin.id ? `#project-${pin.id}` : undefined}
+                name={pin.id ? pinName(pin.id) : undefined}
+                hidden={pin.layer !== 'projects'}
+              />
+            );
+          })
+        }
+      </div>
+      <p class="map-note">{t.layers.note}</p>
+    </section>
+
+    <section class="detail" aria-label={t.detail.breadcrumb}>
+      {
+        projects.map((project) => (
+          <article
+            id={`project-${project.id}`}
+            class:list={['detail-panel', project.id === defaultProject && 'is-default']}
+            aria-labelledby={`project-${project.id}-title`}
+          >
+            <div class="detail-info">
+              <p class="crumb">
+                <a href="#projects">{t.detail.breadcrumb}</a> / <span>{project.title}</span>
+              </p>
+              <h2 id={`project-${project.id}-title`} class="detail-title">
+                {project.title}
+              </h2>
+              <p class="detail-sub">{project.subtitle}</p>
+              <p class="detail-text">{project.description}</p>
+              {project.result && <p class="detail-result">{project.result}</p>}
+              {project.decision && <p class="detail-result">{project.decision}</p>}
+              <ul class="meta-chips">
+                {project.status && <li class="meta-chip is-status">{project.status}</li>}
+                {project.meta.map((item) => (
+                  <li class="meta-chip">{item}</li>
+                ))}
+              </ul>
+              <ul class="tags">
+                {project.tags.map((tag) => (
+                  <li class="tag">{tag}</li>
+                ))}
+              </ul>
+              <div class="actions">
+                <a class="btn btn-primary" href={`/projects/${project.id}/`} hreflang={rtl ? 'en' : undefined}>
+                  {t.detail.openCase}
+                </a>
+                <a class="btn btn-secondary" href="#layers">
+                  {t.detail.backToMap}
+                </a>
+              </div>
+            </div>
+            <div class="detail-visual">
+              <ProjectVisual
+                visual={project.visual}
+                steps={project.steps}
+                labels={t.detail}
+                picture={project.picture}
+                alt={project.imageAlt}
+              />
+            </div>
+          </article>
+        ))
+      }
+    </section>
+
+    <section id="projects" class="section projects" aria-labelledby="projects-title">
+      <h2 id="projects-title" class="section-title">{t.projectsSection.title}</h2>
+      <p class="section-sub">{t.projectsSection.subtitle}</p>
+      <div class="bento">
+        {
+          projects.map((project) => (
+            <article class:list={['card', project.featured && 'card-featured', `card-${project.visual}`]}>
+              <p class="card-label">{project.label}</p>
+              <h3 class="card-title">{project.title}</h3>
+              <p class="card-text">{project.summary}</p>
+              {project.status && <p class="meta-chip is-status card-status">{project.status}</p>}
+              <ul class="tags">
+                {project.cardTags.map((tag) => (
+                  <li class="tag">{tag}</li>
+                ))}
+              </ul>
+              {(project.featured || project.visual === 'bars' || project.visual === 'ndvi') && (
+                <ProjectVisual visual={project.visual} steps={project.steps} labels={t.detail} card />
+              )}
+              <a class="card-link" href={`/projects/${project.id}/`} hreflang={rtl ? 'en' : undefined}>
+                {t.projectsSection.viewProject}
+                <span class="visually-hidden">: {project.title}</span>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="training" class="section training" aria-labelledby="training-title">
+      <h2 id="training-title" class="section-title">{t.training.title}</h2>
+      <p class="section-sub">{t.training.subtitle}</p>
+      <Certificates items={t.training.items} close={t.training.close} missing={t.training.missing} />
+      <p class="courses">
+        <span>{t.training.coursesLabel}</span>
+        {t.training.courses}
+      </p>
+    </section>
+
+    <section id="about" class="section about-contact" aria-labelledby="about-title">
+      <div class="about">
+        <h2 id="about-title" class="section-title">{t.about.title}</h2>
+        <p class="about-text">{t.about.text}</p>
+        <dl class="facts">
+          {
+            t.about.facts.map((fact) => (
+              <div class="fact">
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+      <div id="contact" class="contact-card">
+        <h2 class="contact-title">{t.contact.title}</h2>
+        <ul class="contact-rows">
+          <li>
+            <span class="icon-slot"><Icon name="mail" /></span>
+            <span class="row-text">
+              <span class="row-label">{t.contact.email}</span>
+              <a href={`mailto:${t.email}`} translate="no" dir="ltr">{t.email}</a>
+            </span>
+          </li>
+          <li>
+            <span class="icon-slot"><Icon name="phone" /></span>
+            <span class="row-text">
+              <span class="row-label">{t.contact.phone}</span>
+              <a href={`tel:${t.phone}`} translate="no" dir="ltr">{t.phone.replace(/^\+966(\d{2})(\d{3})(\d{4})$/, '+966 $1 $2 $3')}</a>
+            </span>
+          </li>
+          <li>
+            <span class="icon-slot"><Icon name="linkedin" /></span>
+            <span class="row-text">
+              <span class="row-label">{t.contact.linkedin}</span>
+              <a href={t.linkedin} translate="no" dir="ltr">linkedin.com/in/wael-alanezi</a>
+            </span>
+          </li>
+          <li>
+            <span class="icon-slot"><Icon name="github" /></span>
+            <span class="row-text">
+              <span class="row-label">{t.contact.github}</span>
+              <a href={t.github} translate="no" dir="ltr">github.com/Wael-Alanezi</a>
+            </span>
+          </li>
+        </ul>
+        <a class="btn btn-primary contact-cv" href={t.cv}>{t.contact.downloadCv}</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const map = document.querySelector<HTMLElement>('[data-layer-map]');
+    document.querySelectorAll<HTMLButtonElement>('[data-layer-toggle]').forEach((chip) =>
+      chip.addEventListener('click', () => {
+        const on = chip.getAttribute('aria-pressed') !== 'true';
+        chip.setAttribute('aria-pressed', String(on));
+        map?.querySelectorAll<HTMLElement>(`[data-layer="${chip.dataset.layerToggle}"]`).forEach((pin) => {
+          pin.hidden = !on;
+        });
+      }),
+    );
+
+    const menu = document.querySelector<HTMLDialogElement>('#menu');
+    const opener = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+    opener?.addEventListener('click', () => {
+      menu?.showModal();
+      opener.setAttribute('aria-expanded', 'true');
+    });
+    let viaLink = false;
+    menu?.querySelectorAll('[data-menu-close]').forEach((item) =>
+      item.addEventListener('click', () => {
+        viaLink = item.tagName === 'A';
+        menu.close();
+      }),
+    );
+    menu?.addEventListener('close', () => {
+      opener?.setAttribute('aria-expanded', 'false');
+      if (!viaLink) opener?.focus({ preventScroll: true });
+      viaLink = false;
+    });
+  </script>
+</Layout>

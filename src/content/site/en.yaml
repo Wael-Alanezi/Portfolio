@@ -1,0 +1,130 @@
+lang: en
+title: "Wael Alanezi | Software Engineering student, Riyadh"
+description: "Software Engineering student at Prince Sultan University (AI & Data Science) who turns data into decisions. Projects, results and contact."
+name: Wael Alanezi
+email: wael.m.alanezi@gmail.com
+phone: "+966507737137"
+linkedin: https://www.linkedin.com/in/wael-alanezi
+github: https://github.com/Wael-Alanezi
+cv: /cv.pdf
+skipToContent: Skip to content
+
+nav:
+  projects: Projects
+  about: About
+  contact: Contact
+  menu: Open menu
+  close: Close menu
+  language: "AR | EN"
+  languageLabel: "العربية"
+
+hero:
+  coordinates: "24.7136° N, 46.6753° E · Riyadh"
+  eyebrow: "AI and Data Science · Prince Sultan University"
+  eyebrowShort: "AI and Data Science · PSU"
+  role: Software Engineering Student
+  tagline: "I turn data into decisions. Explore my work on the map, from retrieval agents to drone-based plant health mapping."
+  taglineShort: "I turn data into decisions. Explore my work on the map."
+  viewProjects: View projects
+  downloadCv: Download CV
+  skip: Skip to projects
+  scan: Scanning vegetation layer
+  note: "Gold pins mark projects. Scroll to zoom into each one."
+  explore: Scroll to explore
+
+pins:
+  agentic-assistant: RAG agent
+  mubsir: Mubsir
+  ndvi-drone: NDVI drone
+  rent-and-build: Rent & Build
+  lessons-learned: Lessons learned
+
+layers:
+  title: Explore the map by layer
+  subtitle: "Switch between skills, projects, and goals to see how they connect."
+  skills: Skills
+  projects: Projects
+  goals: Goals
+  note: "Pins are placed on a map of Riyadh. Tap a pin to open the project."
+  skillPins: [Python, SQL, Java]
+  goalPins: [Internship 2027, Graduation 2028]
+  openProject: "Open project:"
+
+detail:
+  breadcrumb: Projects
+  openCase: Open full case study
+  backToMap: Back to map
+  sample: Sample
+  ndviNote: "Sample heatmap for illustration. Final results will come from the drone survey."
+  lowZone: Low vigor zone
+  low: Low
+  high: High plant health
+  barsTitle: Sample comparison
+  barsNote: "Sample data for illustration, not measured results."
+  stores: [Store A, Store B, Store C]
+  pipelineNote: "How the system moves from input to output."
+
+projectsSection:
+  title: Projects
+  subtitle: "Five pieces of work, from AI agents to drone sensing."
+  viewProject: View project
+
+training:
+  title: Training and certifications
+  subtitle: "Courses I completed in 2026. Hover or focus a certificate to preview it, or select it to open it."
+  coursesLabel: Relevant coursework
+  courses: "Data structures and complexity analysis, software engineering and UML, and 3-tier architecture."
+  close: Close
+  missing: "[Certificate image]"
+  items:
+    - title: Building Agentic AI Systems
+      issuer: SDAIA Academy
+      date: July 2026
+      image: sdaia-agentic.webp
+      alt: "Certificate of achievement for Building Agentic AI Systems from SDAIA Academy, July 2026"
+    - title: Developing Generative AI Solutions
+      issuer: SDAIA Academy
+      date: July 2026
+      image: sdaia-genai.webp
+      alt: "Certificate of achievement for Developing Generative AI Solutions from SDAIA Academy, July 2026"
+    - title: Introduction to Data Engineering on Google Cloud
+      issuer: Tuwaiq Academy
+      date: September 2026
+      image: tuwaiq-gcp-data.webp
+      alt: "Certificate of attendance for Introduction to Data Engineering on Google Cloud from Tuwaiq Academy, September 2026"
+    - title: MDQM, ISO 8000 data quality
+      issuer: ECCMA
+      date: July 2026
+      image: eccma-mdqm.webp
+      alt: "ECCMA certificate for Master Data Quality Manager, ISO 8000, July 2026"
+    - title: Introduction to Space Mission Design
+      issuer: Saudi Space Agency, Space Academy
+      date: September 2026
+      image: ssa-space-mission.webp
+      alt: "Saudi Space Agency Space Academy certificate for Introduction to Space Mission Design, September 2026"
+
+about:
+  title: About
+  text: "I am a Software Engineering student at Prince Sultan University in Riyadh, specializing in AI and Data Science. I am aiming for digital transformation and product roles in large organizations, and I am open to internships in software, data, and AI."
+  facts:
+    - label: Graduating
+      value: "2028"
+    - label: Languages
+      value: Arabic · English
+    - label: Track
+      value: AI and Data Science
+    - label: Community
+      value: Project Management Club
+
+contact:
+  title: Let us connect
+  email: Email
+  phone: Phone
+  linkedin: LinkedIn
+  github: GitHub
+  downloadCv: Download CV
+
+notFound:
+  title: Page not found
+  text: "This page doesn’t exist or has moved. The map, projects and contact details are on the home page."
+  home: Go to the home page

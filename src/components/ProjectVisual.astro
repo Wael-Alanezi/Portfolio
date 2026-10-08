@@ -1,0 +1,124 @@
+---
+import MapGrid from './MapGrid.astro';
+import { level, ndviPalette } from '../lib/map';
+
+interface Labels {
+  sample: string;
+  ndviNote: string;
+  lowZone: string;
+  low: string;
+  high: string;
+  barsTitle: string;
+  barsNote: string;
+  stores: string[];
+  pipelineNote: string;
+}
+
+interface Picture {
+  src: string;
+  srcset?: string;
+  width: number;
+  height: number;
+}
+
+interface Props {
+  visual: 'pipeline' | 'bars' | 'ndvi' | 'image';
+  steps?: string[];
+  labels: Labels;
+  picture?: Picture;
+  alt?: string;
+  card?: boolean;
+  eager?: boolean;
+}
+
+const { visual, steps = [], labels, picture, alt = '', card = false, eager = false } = Astro.props;
+const inPatch = (i: number, j: number) => i >= 9 && i <= 11 && j >= 3 && j <= 5;
+const heat = (i: number, j: number) => (inPatch(i, j) ? level(i, j, 2) : 2 + level(i, j, 3));
+const strip = (i: number, j: number) => 2 + level(i + 3, j + 2, 3);
+const bars = [100, 93, 84];
+const cellX = 39.5;
+const cellY = 40;
+---
+
+{
+  visual === 'ndvi' && !card && (
+    <figure class="visual visual-ndvi">
+      <div class="heat">
+        <MapGrid cols={16} rows={11} cell={cellX} cellY={cellY} gap={1.5} colors={ndviPalette} pick={heat} class="heat-map">
+          <rect x={9 * cellX} y={3 * cellY} width={3 * cellX} height={3 * cellY} fill="none" stroke="#ffffff" stroke-width="2.5" />
+          <line x1={10.5 * cellX} x2={10.5 * cellX} y1={3 * cellY} y2={3 * cellY - 40} stroke="#ffffff" stroke-width="2" />
+        </MapGrid>
+        <span class="heat-callout" style={`--cx: ${((10.5 * cellX) / 632) * 100}%; --cy: ${((3 * cellY - 40) / 440) * 100}%`}>
+          {labels.lowZone}
+        </span>
+        <span class="badge">{labels.sample}</span>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span>{labels.low}</span>
+        {ndviPalette.map((color) => <span class="swatch" style={`background: ${color}`} />)}
+        <span>{labels.high}</span>
+      </div>
+      <figcaption class="visual-note">{labels.ndviNote}</figcaption>
+    </figure>
+  )
+}
+
+{
+  visual === 'ndvi' && card && (
+    <div class="ndvi-strip" aria-hidden="true">
+      <MapGrid cols={8} rows={2} cell={14} gap={2} colors={ndviPalette} pick={strip} />
+    </div>
+  )
+}
+
+{
+  visual === 'pipeline' && (
+    <figure class:list={['visual', 'visual-pipeline', card && 'is-card']}>
+      <ol class="pipeline">
+        {steps.map((step, i) => (
+          <li class:list={[i === steps.length - 1 && 'is-end']}>{step}</li>
+        ))}
+      </ol>
+      {!card && <figcaption class="visual-note">{labels.pipelineNote}</figcaption>}
+    </figure>
+  )
+}
+
+{
+  visual === 'bars' && (
+    <figure class:list={['visual', 'visual-bars', card && 'is-card']}>
+      <p class="bars-title">
+        {labels.barsTitle} <span class="badge">{labels.sample}</span>
+      </p>
+      <dl class="bars">
+        {labels.stores.map((store, i) => (
+          <div class:list={['bar-row', i === 2 && 'is-best']}>
+            <dt>{store}</dt>
+            <dd>
+              <span class="bar" style={`--w: ${bars[i]}%`} />
+              <span class="visually-hidden">{bars[i]}%</span>
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <figcaption class="visual-note">{labels.barsNote}</figcaption>
+    </figure>
+  )
+}
+
+{
+  visual === 'image' && picture && (
+    <figure class="visual visual-image">
+      <img
+        src={picture.src}
+        srcset={picture.srcset}
+        sizes="(min-width: 1100px) 632px, 100vw"
+        width={picture.width}
+        height={picture.height}
+        alt={alt}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+    </figure>
+  )
+}

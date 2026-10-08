@@ -1,0 +1,17 @@
+---
+import { gridPaths, type Grid } from '../lib/map';
+
+interface Props extends Grid {
+  class?: string;
+}
+
+const { class: className, ...grid } = Astro.props;
+const width = grid.cols * grid.cell;
+const height = grid.rows * (grid.cellY ?? grid.cell);
+const paths = gridPaths(grid);
+---
+
+<svg class={className} width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true" focusable="false">
+  {paths.map((path) => path.d && <path fill={path.color} d={path.d} />)}
+  <slot />
+</svg>

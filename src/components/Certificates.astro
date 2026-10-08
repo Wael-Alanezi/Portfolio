@@ -14,9 +14,11 @@ interface Item {
 
 interface Props {
   items: Item[];
+  close?: string;
+  missing?: string;
 }
 
-const { items } = Astro.props;
+const { items, close = 'Close', missing = '[Certificate image]' } = Astro.props;
 const folder = path.join(process.cwd(), 'public', 'certificates');
 
 const certificates = await Promise.all(
@@ -66,7 +68,7 @@ const certificates = await Promise.all(
   <div class="cert-card">
     <span class="cert-card-title"></span>
     <span class="cert-card-meta"></span>
-    <span class="cert-card-note">[Certificate image]</span>
+    <span class="cert-card-note">{missing}</span>
   </div>
 </div>
 
@@ -74,13 +76,13 @@ const certificates = await Promise.all(
   <div class="cert-dialog-body">
     <div class="cert-dialog-head">
       <p class="cert-dialog-title" id="cert-dialog-title"></p>
-      <button type="button" class="cert-close">Close</button>
+      <button type="button" class="cert-close">{close}</button>
     </div>
     <img class="cert-image" alt="" width="1600" height="1131" loading="lazy" decoding="async" hidden />
     <div class="cert-card cert-card-large">
       <span class="cert-card-title"></span>
       <span class="cert-card-meta"></span>
-      <span class="cert-card-note">[Certificate image]</span>
+      <span class="cert-card-note">{missing}</span>
     </div>
   </div>
 </dialog>
@@ -117,9 +119,9 @@ const certificates = await Promise.all(
     };
 
     const place = (trigger: HTMLButtonElement) => {
-      const parts = [...list.querySelectorAll('.cert-trigger > span')].map((span) => span.getBoundingClientRect());
-      const textStart = Math.min(...parts.map((r) => r.left));
-      const textEnd = Math.max(...parts.map((r) => r.right));
+      const area = list.getBoundingClientRect();
+      const textStart = area.left;
+      const textEnd = area.right;
       const box = trigger.getBoundingClientRect();
       const width = preview.offsetWidth;
       const height = preview.offsetHeight;

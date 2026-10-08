@@ -3,15 +3,41 @@ import path from 'node:path';
 import sharp from 'sharp';
 import { getCollection, getEntry } from 'astro:content';
 
-export async function getSite() {
-  const entry = await getEntry('site', 'home');
-  if (!entry) throw new Error('Missing src/content/site/home.yaml');
+export type Lang = 'en' | 'ar';
+
+export async function getSite(lang: Lang = 'en') {
+  const entry = await getEntry('site', lang);
+  if (!entry) throw new Error(`Missing src/content/site/${lang}.yaml`);
   return entry.data;
 }
 
 export async function getProjects() {
   const projects = await getCollection('projects', (project) => project.data.published);
   return projects.sort((a, b) => a.data.order - b.data.order);
+}
+
+export function localize(project: Awaited<ReturnType<typeof getProjects>>[number], lang: Lang) {
+  const data = project.data;
+  const text = lang === 'ar' ? data.ar : data;
+  return {
+    id: project.id,
+    featured: data.featured,
+    visual: data.visual,
+    image: data.image,
+    title: text.title,
+    label: text.label,
+    summary: text.summary,
+    subtitle: text.subtitle,
+    description: text.description,
+    status: text.status,
+    meta: text.meta,
+    tags: text.tags,
+    cardTags: text.cardTags ?? text.tags,
+    result: text.result,
+    decision: text.decision,
+    steps: (lang === 'ar' ? data.ar.steps : data.steps) ?? data.steps ?? [],
+    imageAlt: text.imageAlt ?? data.imageAlt ?? '',
+  };
 }
 
 export async function projectImage(file: string) {

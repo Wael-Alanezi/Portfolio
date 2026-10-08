@@ -1,19 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import MapGrid from '../components/MapGrid.astro';
 import { getSite } from '../lib/site';
 
-const site = await getSite();
+const en = await getSite('en');
+const ar = await getSite('ar');
 ---
 
-<Layout title={`Page not found | ${site.name}`} description="This page does not exist.">
-  <div class="case">
-    <header class="case-top">
-      <a class="name" href="/" translate="no">{site.name}</a>
-    </header>
-    <main id="main" class="missing">
-      <h1>Page not found</h1>
-      <p>This page doesn’t exist or has moved. The projects, experience and contact details are on the home page.</p>
-      <a class="button primary" href="/">Go to the home page</a>
-    </main>
-  </div>
+<Layout title={`${en.notFound.title} | ${en.name}`} description={en.notFound.text} skip={en.skipToContent}>
+  <main id="main" class="missing">
+    <div class="missing-map" aria-hidden="true">
+      <MapGrid cols={40} rows={22} cell={48} gap={2} />
+    </div>
+    <div class="missing-text">
+      <p class="coords">404 · 24.7136° N, 46.6753° E</p>
+      <h1>{en.notFound.title}</h1>
+      <p>{en.notFound.text}</p>
+      <a class="btn btn-primary" href="/">{en.notFound.home}</a>
+      <div class="missing-ar" lang="ar" dir="rtl">
+        <h2>{ar.notFound.title}</h2>
+        <p>{ar.notFound.text}</p>
+        <a class="btn btn-secondary" href="/ar/" hreflang="ar">{ar.notFound.home}</a>
+      </div>
+    </div>
+  </main>
 </Layout>

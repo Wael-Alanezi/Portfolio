@@ -2,7 +2,8 @@
 import { render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ProjectLinks from '../../components/ProjectLinks.astro';
-import { getSite, getProjects, projectImage } from '../../lib/site';
+import ProjectVisual from '../../components/ProjectVisual.astro';
+import { getSite, getProjects, localize, projectImage } from '../../lib/site';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
@@ -13,82 +14,109 @@ export async function getStaticPaths() {
 }
 
 const { project, next } = Astro.props;
-const site = await getSite();
+const t = await getSite('en');
 const { Content } = await render(project);
 const data = project.data;
-const main = await projectImage(data.caseImage ?? data.image);
-const mainAlt = data.caseImageAlt ?? data.imageAlt;
+const view = localize(project, 'en');
+const picture = data.image ? await projectImage(data.image) : undefined;
+const caseImage = data.caseImage ? await projectImage(data.caseImage) : undefined;
 const poster = data.video ? `/projects/${data.video}-poster.webp` : undefined;
 ---
 
-<Layout title={`${data.title} | ${site.name}`} description={data.oneLine}>
-  <div class="case">
-    <header class="case-top">
-      <a class="name" href="/" translate="no">{site.name}</a>
-      <nav class="case-nav" aria-label="Primary">
-        <a href="/#work">All projects</a>
-        <button type="button" class="theme" data-theme-toggle>Light theme</button>
-      </nav>
-    </header>
+<Layout title={`${data.title} | ${t.name}`} description={data.oneLine} skip={t.skipToContent}>
+  <header class="nav nav-solid">
+    <a class="brand" href="/">{t.name}</a>
+    <nav class="nav-links" aria-label={t.nav.projects}>
+      <a href="/#projects">{t.nav.projects}</a>
+      <a href="/#about">{t.nav.about}</a>
+      <a href="/#contact">{t.nav.contact}</a>
+    </nav>
+    <div class="nav-end">
+      <a class="lang-pill" href="/ar/" hreflang="ar" data-set-lang="ar">
+        <span dir="ltr">{t.nav.language}</span>
+        <span class="visually-hidden" lang="ar">{t.nav.languageLabel}</span>
+      </a>
+    </div>
+  </header>
 
-    <main id="main">
-      <div class="case-head">
-        <h1 translate="no">{data.title}</h1>
-        <p class="lede">{data.oneLine}</p>
-        <p class="case-meta">{data.context}</p>
-        {data.result && <p class="result">{data.result}</p>}
-        {
-          data.decision && (
-            <p class="decision">
-              <span>Design decision:</span> {data.decision}
-            </p>
-          )
-        }
+  <main id="main" class="case">
+    <article class="detail-panel case-head" aria-labelledby="case-title">
+      <div class="detail-info">
+        <p class="crumb">
+          <a href="/#projects">{t.detail.breadcrumb}</a> / <span>{data.title}</span>
+        </p>
+        <h1 id="case-title" class="detail-title" translate="no">{data.title}</h1>
+        <p class="detail-sub">{view.subtitle}</p>
+        <p class="detail-text">{data.oneLine}</p>
+        {data.result && <p class="detail-result">{data.result}</p>}
+        {data.decision && <p class="detail-result">{data.decision}</p>}
+        <p class="case-context">{data.context}</p>
+        <ul class="meta-chips">
+          {view.status && <li class="meta-chip is-status">{view.status}</li>}
+          {view.meta.map((item) => <li class="meta-chip">{item}</li>)}
+        </ul>
+        <ul class="tags">
+          {view.tags.map((tag) => <li class="tag">{tag}</li>)}
+        </ul>
       </div>
+      <div class="detail-visual">
+        <ProjectVisual visual={data.visual} steps={view.steps} labels={t.detail} picture={picture} alt={view.imageAlt} eager />
+      </div>
+    </article>
 
-      <figure class="figure">
-        <img
-          src={main.src}
-          srcset={main.srcset}
-          sizes="(min-width: 768px) 704px, 100vw"
-          width={main.width}
-          height={main.height}
-          alt={mainAlt}
-          decoding="async"
-        />
-      </figure>
+    {
+      caseImage && (
+        <figure class="case-figure">
+          <img
+            src={caseImage.src}
+            srcset={caseImage.srcset}
+            sizes="(min-width: 900px) 820px, 100vw"
+            width={caseImage.width}
+            height={caseImage.height}
+            alt={data.caseImageAlt ?? ''}
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      )
+    }
 
+    {
+      data.video && (
+        <figure class="case-figure">
+          <video controls muted loop playsinline preload="none" poster={poster} width="960" height="570" aria-describedby="video-caption">
+            <source src={`/projects/${data.video}.webm`} type="video/webm" />
+            <source src={`/projects/${data.video}.mp4`} type="video/mp4" />
+          </video>
+          <figcaption id="video-caption">{data.videoCaption}</figcaption>
+        </figure>
+      )
+    }
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <div class="case-foot">
+      <h2 class="case-foot-title">Stack</h2>
+      <p translate="no">{data.stack.join(', ')}</p>
       {
-        data.video && (
-          <figure class="figure">
-            <video controls muted loop playsinline preload="none" poster={poster} width="960" height="570" aria-describedby="video-caption">
-              <source src={`/projects/${data.video}.webm`} type="video/webm" />
-              <source src={`/projects/${data.video}.mp4`} type="video/mp4" />
-            </video>
-            <figcaption id="video-caption">{data.videoCaption}</figcaption>
-          </figure>
+        data.links.length > 0 && (
+          <>
+            <h2 class="case-foot-title">Links</h2>
+            <ProjectLinks links={data.links} />
+          </>
         )
       }
+    </div>
 
-      <div class="prose">
-        <Content />
-      </div>
-
-      <div class="case-foot">
-        <h2 class="section-title">Stack</h2>
-        <p translate="no">{data.stack.join(', ')}</p>
-        <h2 class="section-title">Links</h2>
-        <ProjectLinks links={data.links} />
-      </div>
-
-      {
-        next.id !== project.id && (
-          <a class="next" href={`/projects/${next.id}/`}>
-            <span class="next-label">Next project</span>
-            <span translate="no">{next.data.title}</span>
-          </a>
-        )
-      }
-    </main>
-  </div>
+    {
+      next.id !== project.id && (
+        <a class="next" href={`/projects/${next.id}/`}>
+          <span class="next-label">Next project</span>
+          <span translate="no">{next.data.title}</span>
+        </a>
+      )
+    }
+  </main>
 </Layout>
