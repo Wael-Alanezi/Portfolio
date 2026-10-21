@@ -5,6 +5,7 @@ import Header from './Header.astro';
 import Footer from './Footer.astro';
 import ProjectFigure from './ProjectFigure.astro';
 import Arrow from './Arrow.astro';
+import RentMedia from './RentMedia.astro';
 import { getSite, home, projectHref, type Lang, type Project } from '../lib/site';
 import '../styles/case.css';
 
@@ -52,6 +53,8 @@ const other = lang === 'ar' ? 'en' : 'ar';
       <div class="case-figure">
         <ProjectFigure project={project} lang={lang} large />
       </div>
+
+      {project.video && <RentMedia lang={lang} video={project.video} />}
 
       <div class="prose">
         <Content />

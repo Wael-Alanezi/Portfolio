@@ -8,6 +8,8 @@ import ProjectFigure from './ProjectFigure.astro';
 import Certificates from './Certificates.astro';
 import Icon from './Icon.astro';
 import Arrow from './Arrow.astro';
+import Sheet from './Sheet.astro';
+import FigRag from './FigRag.astro';
 import { getSite, getProjects, type Lang } from '../lib/site';
 import '../styles/home.css';
 
@@ -21,6 +23,7 @@ const other = lang === 'ar' ? 'en' : 'ar';
 const projects = await getProjects(lang);
 const work = projects.filter((project) => project.group === 'work');
 const more = projects.filter((project) => project.group === 'more');
+const agent = projects.find((project) => project.id === 'agentic-assistant');
 ---
 
 <Layout
@@ -49,6 +52,11 @@ const more = projects.filter((project) => project.group === 'more');
             <a class="btn btn-secondary" href={t.cv}>{t.hero.cv}</a>
           </div>
         </div>
+        <div class="hero-figure">
+          <Sheet title={t.hero.figure}>
+            <FigRag lang={lang} steps={agent?.steps ?? []} />
+          </Sheet>
+        </div>
         <ul class="proof" aria-label={t.hero.proofLabel}>
           {
             t.hero.proof.map((item) => (
@@ -72,7 +80,7 @@ const more = projects.filter((project) => project.group === 'more');
           {
             work.map((project) => (
               <WorkRow project={project} readCase={t.work.readCase}>
-                <ProjectFigure project={project} />
+                <ProjectFigure project={project} lang={lang} />
               </WorkRow>
             ))
           }
@@ -117,7 +125,7 @@ const more = projects.filter((project) => project.group === 'more');
           {
             more.map((project) => (
               <article class="card" aria-labelledby={`${project.id}-title`}>
-                <ProjectFigure project={project} />
+                <ProjectFigure project={project} lang={lang} />
                 <div class="card-text">
                   <p class="label">{project.meta.join(' · ')}</p>
                   <h3 id={`${project.id}-title`}>{project.title}</h3>

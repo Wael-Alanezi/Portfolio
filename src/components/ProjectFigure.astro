@@ -1,13 +1,47 @@
 ---
-import type { Lang, Project } from '../lib/site';
+import { Picture } from 'astro:assets';
+import Sheet from './Sheet.astro';
+import Flow from './Flow.astro';
+import BarCompare from './BarCompare.astro';
+import MubsirChart from './MubsirChart.astro';
+import { getSite, type Lang, type Project } from '../lib/site';
+import booking from '../assets/projects/rent-and-build-booking.webp';
 
 interface Props {
   project: Project;
-  lang?: Lang;
+  lang: Lang;
   large?: boolean;
 }
 
-const { project } = Astro.props;
+const { project, lang, large = false } = Astro.props;
+const f = (await getSite(lang)).figures;
 ---
 
-<span hidden data-figure={project.visual}></span>
+<Sheet title={project.figure} class={`fig-${project.visual}`}>
+  {
+    project.visual === 'rent' && (
+      <div class="fig-stack">
+        <Picture
+          src={booking}
+          formats={['avif', 'webp']}
+          widths={[640, 1000]}
+          sizes={large ? '(min-width: 1248px) 1150px, 100vw' : '(min-width: 1248px) 640px, (min-width: 960px) 55vw, 100vw'}
+          alt={f.screenshot}
+          loading={large ? 'eager' : 'lazy'}
+          class="fig-shot"
+        />
+        <BarCompare before={2743} after={259} beforeLabel={f.before} afterLabel={f.after} unit="ms" note={f.p95note} />
+      </div>
+    )
+  }
+  {
+    project.visual === 'rag' && (
+      <div class="fig-stack">
+        <p class="label fig-kicker">{f.knowledge}</p>
+        <Flow steps={project.steps} label={f.rag} />
+      </div>
+    )
+  }
+  {project.visual === 'mubsir' && <MubsirChart lang={lang} />}
+  {project.visual === 'flow' && <Flow steps={project.steps} label={project.title} planned={project.status ? f.planned : undefined} />}
+</Sheet>

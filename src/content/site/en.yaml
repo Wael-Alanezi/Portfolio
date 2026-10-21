@@ -157,7 +157,8 @@ figures:
   precisionNote: "95% CI: 63.8% to 92.4%"
   price: Average price difference
   priceNote: on correct matches
-  accessories: "Half of the cheapest-store picks were accessories"
+  accessoriesLabel: Accessory picks
+  accessories: "Share of cheapest-store picks that were accessories, not the product"
   planned: Planned
   screenshot: "Rent & Build equipment page: an excavator illustration next to the booking card with rental dates, the total price and a Request booking button"
 

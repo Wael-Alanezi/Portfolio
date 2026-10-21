@@ -206,6 +206,7 @@ dd {
   position: relative;
   isolation: isolate;
   display: grid;
+  grid-template-rows: 1fr auto;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--panel);
@@ -482,5 +483,25 @@ dd {
 @keyframes draw {
   from {
     transform: scaleX(0);
+  }
+}
+
+@keyframes draw-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+.connector-y {
+  transform-origin: center top;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .connector-y {
+      animation: draw-y linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 70%;
+    }
   }
 }

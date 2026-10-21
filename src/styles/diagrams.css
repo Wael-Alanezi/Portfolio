@@ -1,0 +1,335 @@
+.fig-stack {
+  display: grid;
+  gap: 24px;
+}
+
+.fig-shot img,
+img.fig-shot {
+  inline-size: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.flow-wrap {
+  container-type: inline-size;
+  display: grid;
+  gap: 12px;
+}
+
+.flow-planned {
+  justify-self: start;
+  padding-inline: 8px;
+  border: 1px dashed var(--line);
+  border-radius: 4px;
+}
+
+.flow {
+  --flow-gap: 16px;
+  display: grid;
+  gap: var(--flow-gap);
+}
+
+.flow li {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 2px 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+
+.flow.is-planned li {
+  border-style: dashed;
+}
+
+.flow-num {
+  justify-self: start;
+  color: var(--blue);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.flow-name {
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.flow .connector {
+  position: absolute;
+  inset-inline-start: 24px;
+  inset-block-end: calc(100% + 1px);
+  inline-size: 1px;
+  block-size: var(--flow-gap);
+  background: var(--blue);
+  transform-origin: center top;
+  animation-name: draw-y;
+}
+
+.flow .connector::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: -3px;
+  border-inline: 3.5px solid transparent;
+  border-block-start: 5px solid var(--blue);
+}
+
+@container (min-width: 440px) {
+  .flow {
+    --flow-gap: 20px;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+  }
+
+  .flow li {
+    grid-template-columns: 1fr;
+    align-content: start;
+    padding: 12px 14px;
+  }
+
+  .flow .connector {
+    inset-block: 50% auto;
+    inset-inline: auto calc(100% + 1px);
+    inline-size: var(--flow-gap);
+    block-size: 1px;
+    transform-origin: var(--from) center;
+    animation-name: draw;
+  }
+
+  .flow .connector::after {
+    inset-block: -3px auto;
+    inset-inline: auto 0;
+    border-inline: 0;
+    border-block: 3.5px solid transparent;
+    border-inline-start: 5px solid var(--blue);
+  }
+}
+
+.bars,
+.bars-list {
+  display: grid;
+  gap: 14px;
+}
+
+.bar-row {
+  display: grid;
+  gap: 6px;
+}
+
+.bar-row dd {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar,
+.scale {
+  position: relative;
+  display: block;
+  block-size: 10px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--line) 55%, transparent);
+}
+
+.bar-fill,
+.scale-fill {
+  display: block;
+  inline-size: var(--size);
+  block-size: 100%;
+  border-radius: 2px;
+  background: var(--muted);
+}
+
+.is-after .bar-fill,
+.scale-fill {
+  background: var(--blue);
+}
+
+.bar-value {
+  min-inline-size: 8ch;
+  color: var(--text);
+  font-size: 0.9375rem;
+  text-align: end;
+}
+
+.is-after .bar-value {
+  color: var(--accent);
+}
+
+.bars-note,
+.metric-note {
+  color: var(--muted);
+}
+
+.metrics {
+  display: grid;
+  gap: 22px;
+}
+
+.metric {
+  display: grid;
+  gap: 8px;
+}
+
+.metric-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.metric-value {
+  color: var(--text);
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.whisker {
+  position: absolute;
+  inset-block: -5px;
+  inset-inline-start: var(--lo);
+  inline-size: calc(var(--hi) - var(--lo));
+  border-inline: 1px solid var(--text);
+  background: linear-gradient(var(--text), var(--text)) center / 100% 1px no-repeat;
+}
+
+.scale-split .scale-fill {
+  background: var(--muted);
+}
+
+.metric-finding {
+  padding-block-start: 18px;
+  border-block-start: 1px dashed var(--line);
+}
+
+.scale-axis {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.6875rem;
+}
+
+.rag {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.node {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.node-start {
+  font-family: var(--mono);
+  font-size: var(--step-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--body);
+}
+
+:lang(ar) .node-start {
+  font-family: var(--arabic);
+  font-size: 0.875rem;
+  text-transform: none;
+}
+
+.node-main {
+  border-color: var(--blue);
+}
+
+.drop {
+  display: block;
+  inline-size: 1px;
+  block-size: 20px;
+  background: var(--blue);
+}
+
+.agents {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  inline-size: 100%;
+  padding-block-start: 20px;
+}
+
+.agents::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: calc((100% - 24px) / 6);
+  block-size: 1px;
+  background: var(--blue);
+}
+
+.agent {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.agent::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -20px;
+  inset-inline-start: 50%;
+  inline-size: 1px;
+  block-size: 20px;
+  background: var(--blue);
+}
+
+.agent .node {
+  display: grid;
+  place-items: center;
+  min-block-size: 3.8em;
+  padding-inline: 8px;
+}
+
+.agent-detail {
+  font-size: 0.625rem;
+  line-height: 1.6;
+}
+
+.agent-steps {
+  display: grid;
+  gap: 14px;
+}
+
+.agent-steps li {
+  position: relative;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.agent-steps li + li::before {
+  content: '';
+  position: absolute;
+  inset-block-end: calc(100% + 1px);
+  inset-inline-start: 50%;
+  inline-size: 1px;
+  block-size: 14px;
+  background: var(--blue);
+}
+
+.agent-steps .is-gate {
+  border-style: dashed;
+  border-color: var(--blue);
+  color: var(--text);
+}

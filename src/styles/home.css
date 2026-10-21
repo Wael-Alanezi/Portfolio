@@ -1,5 +1,9 @@
 .hero {
-  padding-block: clamp(28px, 6vw, 80px) clamp(48px, 7vw, 88px);
+  padding-block: clamp(28px, 6vw, 80px) clamp(40px, 5vw, 64px);
+}
+
+#work {
+  padding-block-start: clamp(56px, 7vw, 88px);
 }
 
 .hero-grid {
@@ -159,6 +163,7 @@
 
 .work-media {
   order: -1;
+  align-self: center;
 }
 
 .work-media:empty {
@@ -189,10 +194,10 @@
 }
 
 .points .num {
+  justify-self: start;
   padding-block-start: 0.2em;
   color: var(--blue);
   font-size: 0.8125rem;
-  text-align: start;
 }
 
 .row-link {

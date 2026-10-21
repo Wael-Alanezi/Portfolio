@@ -1,0 +1,35 @@
+---
+import { getSite, type Lang } from '../lib/site';
+
+interface Props {
+  lang: Lang;
+  steps: string[];
+}
+
+const { lang, steps } = Astro.props;
+const f = (await getSite(lang)).figures;
+---
+
+<div class="rag">
+  <p class="node node-start">{f.request}</p>
+  <span class="drop connector-y" aria-hidden="true"></span>
+  <p class="node node-main">{f.supervisor}</p>
+  <span class="drop connector-y" aria-hidden="true"></span>
+  <ul class="agents">
+    <li class="agent">
+      <p class="node">{f.calendar}</p>
+    </li>
+    <li class="agent">
+      <p class="node">{f.knowledge}</p>
+      <p class="agent-detail label">{steps.join(' · ')}</p>
+    </li>
+    <li class="agent">
+      <p class="node">{f.email}</p>
+      <ol class="agent-steps">
+        <li>{f.draft}</li>
+        <li class="is-gate">{f.approve}</li>
+        <li>{f.send}</li>
+      </ol>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,51 @@
+---
+import { getSite, type Lang } from '../lib/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const f = (await getSite(lang)).figures;
+const low = 78.1 - 14.3;
+const high = 78.1 + 14.3;
+---
+
+<div class="metrics">
+  <div class="metric">
+    <div class="metric-head">
+      <p class="label">{f.coverage}</p>
+      <p class="metric-value num">84.8%</p>
+    </div>
+    <span class="scale" aria-hidden="true"><span class="scale-fill connector" style="--size: 84.8%"></span></span>
+    <p class="metric-note small">{f.coverageNote}</p>
+  </div>
+  <div class="metric">
+    <div class="metric-head">
+      <p class="label">{f.precision}</p>
+      <p class="metric-value num">78.1%</p>
+    </div>
+    <span class="scale" aria-hidden="true">
+      <span class="scale-fill connector" style="--size: 78.1%"></span>
+      <span class="whisker" style={`--lo: ${low.toFixed(1)}%; --hi: ${high.toFixed(1)}%`}></span>
+    </span>
+    <p class="metric-note small">{f.precisionNote}</p>
+  </div>
+  <div class="metric">
+    <div class="metric-head">
+      <p class="label">{f.price}</p>
+      <p class="metric-value num">2.5%</p>
+    </div>
+    <span class="scale" aria-hidden="true"><span class="scale-fill connector" style="--size: 2.5%"></span></span>
+    <p class="metric-note small">{f.priceNote}</p>
+  </div>
+  <div class="metric metric-finding">
+    <div class="metric-head">
+      <p class="label">{f.accessoriesLabel}</p>
+      <p class="metric-value num">50%</p>
+    </div>
+    <span class="scale scale-split" aria-hidden="true"><span class="scale-fill connector" style="--size: 50%"></span></span>
+    <p class="metric-note small">{f.accessories}</p>
+  </div>
+  <p class="scale-axis num small" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></p>
+</div>

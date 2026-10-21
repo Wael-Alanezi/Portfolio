@@ -1,0 +1,38 @@
+---
+interface Props {
+  before: number;
+  after: number;
+  beforeLabel: string;
+  afterLabel: string;
+  unit: string;
+  note: string;
+}
+
+const { before, after, beforeLabel, afterLabel, unit, note } = Astro.props;
+const format = (value: number) => value.toLocaleString('en-US');
+const rows = [
+  { label: beforeLabel, value: before, kind: 'before' },
+  { label: afterLabel, value: after, kind: 'after' },
+];
+---
+
+<div class="bars">
+  <dl class="bars-list">
+    {
+      rows.map((row) => (
+        <div class:list={['bar-row', `is-${row.kind}`]}>
+          <dt class="label">{row.label}</dt>
+          <dd>
+            <span class="bar" style={`--size: ${((row.value / before) * 100).toFixed(2)}%`} aria-hidden="true">
+              <span class="bar-fill connector" />
+            </span>
+            <span class="bar-value num">
+              {format(row.value)} {unit}
+            </span>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+  <p class="bars-note small">{note}</p>
+</div>

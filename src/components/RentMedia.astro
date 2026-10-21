@@ -1,0 +1,36 @@
+---
+import { Picture } from 'astro:assets';
+import Sheet from './Sheet.astro';
+import { getSite, type Lang } from '../lib/site';
+import homeShot from '../assets/projects/rent-and-build-home.webp';
+import architecture from '../assets/projects/rent-and-build-architecture.png';
+
+interface Props {
+  lang: Lang;
+  video: string;
+}
+
+const { lang, video } = Astro.props;
+const t = await getSite(lang);
+const homeAlt =
+  lang === 'ar'
+    ? 'الصفحة الرئيسية لـ Rent & Build مع البحث عن المعدات حسب النوع والمدينة، وأحدث الآلات المضافة'
+    : 'Rent & Build home page with equipment search by type and city, and recently listed machines';
+---
+
+<div class="media-grid">
+  <Sheet title={lang === 'ar' ? 'الشكل 01ب · Rent & Build · البنية' : 'FIG. 01b · Rent & Build · Architecture'}>
+    <Picture src={architecture} formats={['avif', 'webp']} widths={[800, 1600]} sizes="(min-width: 1248px) 1150px, 100vw" alt={t.caseStudy.architecture} loading="lazy" class="fig-shot" />
+    <p class="small media-credit">{t.caseStudy.architectureCredit}</p>
+  </Sheet>
+  <Sheet title={lang === 'ar' ? 'الشكل 01ج · Rent & Build · الصفحة الرئيسية' : 'FIG. 01c · Rent & Build · Home page'}>
+    <Picture src={homeShot} formats={['avif', 'webp']} widths={[640, 1280]} sizes="(min-width: 960px) 560px, 100vw" alt={homeAlt} loading="lazy" class="fig-shot" />
+  </Sheet>
+  <Sheet title={lang === 'ar' ? 'الشكل 01د · Rent & Build · العرض التوضيحي' : 'FIG. 01d · Rent & Build · Demo'}>
+    <video class="fig-shot" controls muted loop playsinline preload="none" poster={`/projects/${video}-poster.webp`} width="960" height="570" aria-describedby="video-caption">
+      <source src={`/projects/${video}.webm`} type="video/webm" />
+      <source src={`/projects/${video}.mp4`} type="video/mp4" />
+    </video>
+    <p class="small media-credit" id="video-caption">{t.caseStudy.video}</p>
+  </Sheet>
+</div>
