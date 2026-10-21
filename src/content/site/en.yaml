@@ -136,6 +136,7 @@ contact:
 footer:
   built: Built
   top: Back to top
+  stats: "Measured October 2026: Lighthouse 99 mobile, 100 desktop · 175 KB home page · layout shift 0"
 
 figures:
   request: Request

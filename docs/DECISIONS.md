@@ -134,3 +134,12 @@ Bricolage uses its variable `opsz`, `wdth` and `wght` axes, with `font-optical-s
 - **What:** The CV is now `public/Wael-Alanezi-CV.pdf`, rebuilt by `scripts/cv.py` with the same layout as the old file (every line in the same place). Only the profile changed: it now says Wael is seeking a Summer 2027 internship in software, data or AI, instead of naming one company's role. `/cv.pdf` redirects permanently to the new file through `vercel.json`. The Rent & Build "Live demo" link is gone, because there is no public demo. Screenshots are no longer committed (`docs/screenshots/` is ignored).
 - **Why:** A CV written for one employer looks wrong to every other recruiter, and a link with "[URL]" in it looks unfinished.
 - **Alternative rejected:** Editing the old PDF directly. Its generator wasn't in the repo, so a script that can be run again is easier to keep up to date.
+
+## Blueprint redesign, phases 2 to 7
+- **What:** A dark "engineering sheet" design: one accent colour (amber, used only for the main button and the Rent & Build result), IBM Plex Sans, Sans Arabic and Mono loaded through Astro's fonts API with metric-matched fallbacks, a 12-column layout and numbered sections. The homepage leads with the name in both scripts, a short lead, and three linked results, then Selected work (Rent & Build, the agentic assistant, Mubsir), Hackathons & programs, More work, Training, and About with contact. Every figure is HTML and CSS built from real numbers, and every case study now exists in Arabic at `/ar/projects/*`.
+- **Why:** A recruiter should see who Wael is, what he builds and real proof within one screen. The old map design put an unfinished project first and showed sample data.
+- **Kept:** the certificate preview and dialog, the Rent & Build case study and video, the bilingual 404, RTL support and the no-tracking setup.
+- **Removed:** the map grid, pins, layer chips, scan line and every sample visual.
+- **Agentic assistant:** the five RAG stage names (load, split, embed, store, retrieve) come from the project's GitHub README. Its repo lists three team members, so the site doesn't call it solo until Wael confirms.
+- **Motion:** connectors and bars draw in once as they scroll into view (CSS scroll-driven animation, only where supported) and stay still with reduced motion.
+- **Measured (October 2026, local production build):** Lighthouse 99 mobile and 100 desktop for performance, 100 for accessibility, best practices and SEO, on `/` and `/ar/`. Home page transfer 175 KB, layout shift 0.

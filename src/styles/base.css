@@ -72,7 +72,8 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-:focus-visible {
+:focus-visible,
+video:focus-within {
   outline: 2px solid var(--blue);
   outline-offset: 3px;
   border-radius: 2px;

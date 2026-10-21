@@ -6,18 +6,19 @@ A one-page portfolio with project case studies, built with Astro as a static sit
 
 All text lives in `src/content/`, so you don't need to touch code:
 
-- `src/content/site/en.yaml` and `src/content/site/ar.yaml`: every piece of text on the home page, in English and Arabic (hero, map layers, project detail labels, certificates, About, contact, 404). Keep the two files in step when you change one.
-- `src/content/projects/*.md`: one file per project. The top block holds the card and detail text in English, with an `ar:` block for the Arabic version. The text below the top block is the English case-study page.
-- `visual` picks the project's graphic: `pipeline` (with `steps`), `bars` (sample price bars), `ndvi` (sample heatmap) or `image`.
-- To hide a project, add `published: false` at the top of its file.
+- `src/content/site/en.yaml` and `src/content/site/ar.yaml`: every piece of text on the home page and the shared labels, in English and Arabic (hero and proof strip, section titles, Hackathons & programs, certificates, About, contact, figure labels, case-study labels, 404). Keep the two files in step when you change one.
+- `src/content/projects/*.md`: one file per project, with the shared data (order, `group`, `visual`, stack, video) and the English text. The text below the top block is the English case study.
+- `src/content/projects-ar/*.md`: the Arabic text for the same projects, with the Arabic case study below the top block. Every project needs both files.
+- `group` puts a project in Selected work (`work`) or More work (`more`). `visual` picks its figure: `rent`, `rag`, `mubsir` or `flow` (which draws `steps`).
 
-The map grids, heatmaps and pins are drawn in code from a seeded pattern (`src/lib/map.ts`), so they look the same on every load. The Mubsir bars and NDVI heatmap are labelled as samples on the page.
+Every figure is HTML and CSS drawn from real numbers in these files. There is no sample data.
 
 ## Add files
 
 - **CV:** `public/Wael-Alanezi-CV.pdf`, built by `scripts/cv.py` (ReportLab: `python3 scripts/cv.py`). Edit the text in the script and run it again to update it. The old `/cv.pdf` address redirects to it (`vercel.json`).
-- **Project images:** `public/projects/`. A project with `visual: image` uses its `image` file.
+- **Project images:** `src/assets/projects/`. Astro turns them into AVIF and WebP at build time. The Rent & Build demo video and its poster stay in `public/projects/`.
 - **Certificates:** images live in `public/certificates/`. Small preview thumbnails are made automatically in `public/certificates/thumbs/` when you run `npm run dev` or `npm run build`. Check certificates for personal details (such as an ID number) and cover them before adding.
+- **Social image and touch icon:** `npm run og` redraws `public/og.png` and `public/apple-touch-icon.png` with Playwright.
 
 ## Run locally
 

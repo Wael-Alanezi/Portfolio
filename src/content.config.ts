@@ -127,7 +127,7 @@ const site = defineCollection({
       github: z.string(),
       cv: z.string(),
     }),
-    footer: z.object({ built: z.string(), top: z.string() }),
+    footer: z.object({ built: z.string(), top: z.string(), stats: z.string() }),
     figures: z.record(z.string(), z.string()),
     caseStudy: z.object({
       back: z.string(),

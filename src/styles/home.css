@@ -300,7 +300,9 @@
 .inline-links a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-block-size: 44px;
+  min-inline-size: 44px;
 }
 
 @media (min-width: 760px) {

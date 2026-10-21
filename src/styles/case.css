@@ -1,12 +1,12 @@
 .case-head {
-  padding-block: clamp(32px, 6vw, 72px) clamp(40px, 6vw, 72px);
+  padding-block: clamp(16px, 5vw, 72px) clamp(40px, 6vw, 72px);
   border-block-end: 1px solid var(--line);
 }
 
 .case-head-inner {
   display: grid;
   justify-items: start;
-  gap: 16px;
+  gap: 12px;
 }
 
 .case-head h1 {
@@ -27,7 +27,6 @@
   align-items: center;
   gap: 8px;
   min-block-size: 44px;
-  margin-block-end: 8px;
   color: var(--body);
   font-size: var(--step-small);
   text-decoration: none;
@@ -110,6 +109,7 @@
   display: inline-flex;
   align-items: center;
   min-block-size: 44px;
+  min-inline-size: 44px;
 }
 
 .next {
