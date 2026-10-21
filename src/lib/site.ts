@@ -1,7 +1,4 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import sharp from 'sharp';
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 
 export type Lang = 'en' | 'ar';
 
@@ -11,44 +8,33 @@ export async function getSite(lang: Lang = 'en') {
   return entry.data;
 }
 
-export async function getProjects() {
-  const projects = await getCollection('projects', (project) => project.data.published);
-  return projects.sort((a, b) => a.data.order - b.data.order);
+export const home = (lang: Lang) => (lang === 'ar' ? '/ar/' : '/');
+
+export const projectHref = (id: string, lang: Lang) => `${lang === 'ar' ? '/ar' : ''}/projects/${id}/`;
+
+export type Project = Awaited<ReturnType<typeof getProjects>>[number];
+
+export async function getProjects(lang: Lang) {
+  const base = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  const arabic = lang === 'ar' ? await getCollection('projectsAr') : [];
+  return base.map((entry) => {
+    const ar = arabic.find((item) => item.id === entry.id);
+    if (lang === 'ar' && !ar) throw new Error(`Missing src/content/projects-ar/${entry.id}.md`);
+    const text = ar ? ar.data : entry.data;
+    return {
+      id: entry.id,
+      entry: (ar ?? entry) as CollectionEntry<'projects'> | CollectionEntry<'projectsAr'>,
+      ...entry.data,
+      ...text,
+      steps: text.steps ?? entry.data.steps ?? [],
+      href: projectHref(entry.id, lang),
+    };
+  });
 }
 
-export function localize(project: Awaited<ReturnType<typeof getProjects>>[number], lang: Lang) {
-  const data = project.data;
-  const text = lang === 'ar' ? data.ar : data;
-  return {
-    id: project.id,
-    featured: data.featured,
-    visual: data.visual,
-    image: data.image,
-    title: text.title,
-    label: text.label,
-    summary: text.summary,
-    subtitle: text.subtitle,
-    description: text.description,
-    status: text.status,
-    meta: text.meta,
-    tags: text.tags,
-    cardTags: text.cardTags ?? text.tags,
-    result: text.result,
-    decision: text.decision,
-    steps: (lang === 'ar' ? data.ar.steps : data.steps) ?? data.steps ?? [],
-    imageAlt: text.imageAlt ?? data.imageAlt ?? '',
-  };
-}
-
-export async function projectImage(file: string) {
-  const folder = path.join(process.cwd(), 'public', 'projects');
-  const small = file.replace(/\.webp$/, '-640.webp');
-  const { width = 1280, height = 800 } = await sharp(path.join(folder, file)).metadata();
-  const hasSmall = fs.existsSync(path.join(folder, small));
-  return {
-    src: `/projects/${file}`,
-    srcset: hasSmall ? `/projects/${small} 640w, /projects/${file} ${width}w` : undefined,
-    width,
-    height,
-  };
+export function builtMonth(lang: Lang) {
+  return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-SA-u-ca-gregory-nu-latn' : 'en-GB', {
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date());
 }

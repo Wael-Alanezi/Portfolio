@@ -1,0 +1,158 @@
+.case-head {
+  padding-block: clamp(32px, 6vw, 72px) clamp(40px, 6vw, 72px);
+  border-block-end: 1px solid var(--line);
+}
+
+.case-head-inner {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+}
+
+.case-head h1 {
+  max-inline-size: 18ch;
+}
+
+.case-head .lead {
+  max-inline-size: 44rem;
+}
+
+.case-context {
+  max-inline-size: 44rem;
+  color: var(--muted);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-block-size: 44px;
+  margin-block-end: 8px;
+  color: var(--body);
+  font-size: var(--step-small);
+  text-decoration: none;
+}
+
+.back-link .arrow {
+  scale: -1 1;
+}
+
+[dir='rtl'] .back-link .arrow {
+  scale: 1 1;
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+.case-layout {
+  display: grid;
+  gap: 48px;
+  padding-block: clamp(40px, 6vw, 80px);
+}
+
+.case-figure:has(> [hidden]:only-child) {
+  display: none;
+}
+
+.prose {
+  display: grid;
+  gap: 16px;
+  max-inline-size: 44rem;
+}
+
+.prose h2 {
+  margin-block-start: 24px;
+  font-size: var(--step-h3);
+  line-height: var(--lh-h3);
+}
+
+.prose h2:first-child {
+  margin-block-start: 0;
+}
+
+.prose ul {
+  display: grid;
+  gap: 10px;
+}
+
+.prose li {
+  position: relative;
+  padding-inline-start: 24px;
+}
+
+.prose li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.8em;
+  inline-size: 10px;
+  block-size: 1px;
+  background: var(--blue);
+}
+
+.prose strong {
+  color: var(--text);
+}
+
+.case-side {
+  display: grid;
+  align-content: start;
+  gap: 32px;
+}
+
+.case-side > div {
+  display: grid;
+  gap: 12px;
+}
+
+.case-links {
+  display: grid;
+}
+
+.case-links a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+}
+
+.next {
+  display: grid;
+  gap: 4px;
+  margin-block-end: clamp(48px, 7vw, 96px);
+  padding-block: 24px;
+  border-block: 1px solid var(--line);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.next-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--step-h3);
+  font-weight: 600;
+}
+
+.next:hover .next-title {
+  color: var(--accent);
+}
+
+@media (min-width: 960px) {
+  .case-layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 56px var(--gap);
+  }
+
+  .case-figure {
+    grid-column: 1 / -1;
+  }
+
+  .prose {
+    grid-column: 1 / span 8;
+  }
+
+  .case-side {
+    grid-column: 10 / span 3;
+  }
+}

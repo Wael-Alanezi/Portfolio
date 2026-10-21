@@ -49,6 +49,9 @@
 
 :root:lang(ar) {
   --sans: var(--arabic);
+}
+
+[lang='ar'] {
   --track-h1: 0;
   --track-label: 0;
   --lh-h1: 1.3;

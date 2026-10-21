@@ -1,0 +1,13 @@
+---
+import type { Lang, Project } from '../lib/site';
+
+interface Props {
+  project: Project;
+  lang?: Lang;
+  large?: boolean;
+}
+
+const { project } = Astro.props;
+---
+
+<span hidden data-figure={project.visual}></span>

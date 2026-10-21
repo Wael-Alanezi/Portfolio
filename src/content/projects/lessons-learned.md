@@ -1,33 +1,19 @@
 ---
 title: "Lessons learned for PMOs"
-order: 5
-visual: "pipeline"
-steps: ["Retrieve", "Route", "Reflect", "Approve"]
-label: "Hackathon project"
-summary: "An agentic system that captures and reuses project lessons."
-subtitle: "Reusing what past projects learned"
+order: 4
+group: "more"
+visual: "flow"
+figure: "FIG. 04 · Lessons learned · Workflow"
+meta: ["Alenmaa Hackathon", "SDAIA Academy", "2026"]
+summary: "An AI assistant that helps project teams find and reuse lessons from past projects, and asks a person before saving new ones."
 description: "An AI assistant that helps project teams find and reuse lessons from past projects, and asks a person before saving new ones."
-meta: ["Alenmaa Hackathon", "SDAIA Academy program"]
-tags: ["Agentic AI", "PMO", "LangGraph"]
-cardTags: ["Agentic AI", "PMO"]
-decision: "New lessons are saved only after a person approves them."
-oneLine: "An AI assistant that helps project teams find and reuse lessons from past projects, and asks a person before saving new ones."
 context: "Built for the Alenmaa Hackathon and the SDAIA Academy program, 2026. I designed the agentic RAG system and built its knowledge base."
+tags: ["LangGraph", "Agentic RAG", "Streamlit"]
+steps: ["Retrieve", "Route", "Reflect", "Approve"]
 stack: ["Python", "LangGraph", "Chroma", "Hugging Face embeddings", "Streamlit"]
 links:
   - label: "Code"
     href: "https://github.com/Wael-Alanezi/PM_LessonLearned_AgenticRag"
-ar:
-  title: "الدروس المستفادة لمكاتب إدارة المشاريع"
-  label: "مشروع هاكاثون"
-  summary: "نظام وكلاء ذكاء اصطناعي يلتقط دروس المشاريع ويعيد استخدامها."
-  subtitle: "الاستفادة مما تعلّمته المشاريع السابقة"
-  description: "مساعد ذكاء اصطناعي يساعد فرق المشاريع على إيجاد دروس المشاريع السابقة وإعادة استخدامها، ويطلب موافقة شخص قبل حفظ أي درس جديد."
-  meta: ["هاكاثون النماء", "برنامج أكاديمية سدايا"]
-  tags: ["الذكاء الاصطناعي الوكيل", "إدارة المشاريع", "LangGraph"]
-  cardTags: ["الذكاء الاصطناعي الوكيل", "إدارة المشاريع"]
-  decision: "لا تُحفظ الدروس الجديدة إلا بعد موافقة شخص عليها."
-  steps: ["الاسترجاع", "التوجيه", "المراجعة", "الموافقة"]
 ---
 
 ## What I built

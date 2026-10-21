@@ -4,50 +4,37 @@ import { z } from 'astro/zod';
 
 const link = z.object({
   label: z.string(),
-  href: z.string().optional(),
+  href: z.string(),
 });
 
-const fact = z.object({
-  label: z.string(),
-  value: z.string(),
-});
-
-const translation = z.object({
+const text = z.object({
   title: z.string(),
-  label: z.string(),
-  summary: z.string(),
-  subtitle: z.string(),
-  description: z.string(),
-  status: z.string().optional(),
   meta: z.array(z.string()),
+  summary: z.string(),
+  description: z.string(),
+  context: z.string().optional(),
+  status: z.string().optional(),
+  points: z.array(z.string()).default([]),
   tags: z.array(z.string()),
-  cardTags: z.array(z.string()).optional(),
-  result: z.string().optional(),
-  decision: z.string().optional(),
-  imageAlt: z.string().optional(),
+  figure: z.string(),
+  steps: z.array(z.string()).optional(),
+  links: z.array(link).default([]),
 });
 
 const projects = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/projects' }),
-  schema: translation.extend({
+  schema: text.extend({
     order: z.number(),
-    published: z.boolean().default(true),
-    featured: z.boolean().default(false),
-    visual: z.enum(['pipeline', 'bars', 'ndvi', 'image']),
-    steps: z.array(z.string()).optional(),
-    oneLine: z.string(),
-    context: z.string(),
-    image: z.string().optional(),
-    caseImage: z.string().optional(),
-    caseImageAlt: z.string().optional(),
+    group: z.enum(['work', 'more']),
+    visual: z.enum(['rent', 'rag', 'mubsir', 'flow']),
+    stack: z.array(z.string()).default([]),
     video: z.string().optional(),
-    videoCaption: z.string().optional(),
-    stack: z.array(z.string()),
-    links: z.array(link),
-    ar: translation.extend({
-      steps: z.array(z.string()).optional(),
-    }),
   }),
+});
+
+const projectsAr = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/projects-ar' }),
+  schema: text,
 });
 
 const site = defineCollection({
@@ -56,70 +43,60 @@ const site = defineCollection({
     lang: z.enum(['en', 'ar']),
     title: z.string(),
     description: z.string(),
+    ogAlt: z.string(),
     name: z.string(),
+    otherName: z.string(),
     email: z.string(),
     phone: z.string(),
+    phoneDisplay: z.string(),
     linkedin: z.string(),
     github: z.string(),
     cv: z.string(),
     skipToContent: z.string(),
     nav: z.object({
-      projects: z.string(),
+      label: z.string(),
+      work: z.string(),
+      programs: z.string(),
       about: z.string(),
       contact: z.string(),
       menu: z.string(),
       close: z.string(),
       language: z.string(),
-      languageLabel: z.string(),
     }),
     hero: z.object({
-      coordinates: z.string(),
-      mapsUrl: z.string(),
-      newTab: z.string(),
-      eyebrow: z.string(),
-      eyebrowShort: z.string(),
+      kicker: z.string(),
       role: z.string(),
-      tagline: z.string(),
-      taglineShort: z.string(),
-      viewProjects: z.string(),
-      downloadCv: z.string(),
-      skip: z.string(),
-      scan: z.string(),
-      note: z.string(),
-      explore: z.string(),
+      lead: z.string(),
+      work: z.string(),
+      cv: z.string(),
+      proofLabel: z.string(),
+      proof: z.array(
+        z.object({
+          label: z.string(),
+          value: z.string(),
+          note: z.string(),
+          href: z.string(),
+          accent: z.boolean().default(false),
+        }),
+      ),
+      figure: z.string(),
     }),
-    pins: z.record(z.string(), z.string()),
-    layers: z.object({
+    work: z.object({ index: z.string(), title: z.string(), readCase: z.string() }),
+    programs: z.object({
+      index: z.string(),
       title: z.string(),
-      subtitle: z.string(),
-      skills: z.string(),
-      projects: z.string(),
-      goals: z.string(),
-      note: z.string(),
-      skillPins: z.array(z.string()),
-      goalPins: z.array(z.string()),
-      openProject: z.string(),
+      items: z.array(
+        z.object({
+          date: z.string(),
+          title: z.string(),
+          text: z.string(),
+          links: z.array(link).default([]),
+        }),
+      ),
     }),
-    detail: z.object({
-      breadcrumb: z.string(),
-      openCase: z.string(),
-      backToMap: z.string(),
-      sample: z.string(),
-      ndviNote: z.string(),
-      lowZone: z.string(),
-      low: z.string(),
-      high: z.string(),
-      barsTitle: z.string(),
-      barsNote: z.string(),
-      stores: z.array(z.string()),
-      pipelineNote: z.string(),
-    }),
-    projectsSection: z.object({
-      title: z.string(),
-      subtitle: z.string(),
-      viewProject: z.string(),
-    }),
+    more: z.object({ index: z.string(), title: z.string() }),
     training: z.object({
+      index: z.string(),
       title: z.string(),
       subtitle: z.string(),
       coursesLabel: z.string(),
@@ -137,9 +114,10 @@ const site = defineCollection({
       ),
     }),
     about: z.object({
+      index: z.string(),
       title: z.string(),
       text: z.string(),
-      facts: z.array(fact),
+      facts: z.array(z.object({ label: z.string(), value: z.string() })),
     }),
     contact: z.object({
       title: z.string(),
@@ -147,7 +125,18 @@ const site = defineCollection({
       phone: z.string(),
       linkedin: z.string(),
       github: z.string(),
-      downloadCv: z.string(),
+      cv: z.string(),
+    }),
+    footer: z.object({ built: z.string(), top: z.string() }),
+    figures: z.record(z.string(), z.string()),
+    caseStudy: z.object({
+      back: z.string(),
+      stack: z.string(),
+      links: z.string(),
+      next: z.string(),
+      video: z.string(),
+      architecture: z.string(),
+      architectureCredit: z.string(),
     }),
     notFound: z.object({
       title: z.string(),
@@ -157,4 +146,4 @@ const site = defineCollection({
   }),
 });
 
-export const collections = { projects, site };
+export const collections = { projects, projectsAr, site };

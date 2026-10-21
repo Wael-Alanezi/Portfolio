@@ -1,0 +1,42 @@
+---
+import Arrow from './Arrow.astro';
+import type { Project } from '../lib/site';
+
+interface Props {
+  project: Project;
+  readCase: string;
+}
+
+const { project, readCase } = Astro.props;
+const titleId = `${project.id}-title`;
+---
+
+<article class="work-row" aria-labelledby={titleId}>
+  <div class="work-text">
+    <p class="label">{project.meta.join(' · ')}</p>
+    <h3 id={titleId}>{project.title}</h3>
+    <p class="work-summary">{project.summary}</p>
+    {
+      project.points.length > 0 && (
+        <ol class="points">
+          {project.points.map((point, i) => (
+            <li>
+              <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span>{point}</span>
+            </li>
+          ))}
+        </ol>
+      )
+    }
+    <ul class="chips">
+      {project.tags.map((tag) => <li class="chip">{tag}</li>)}
+    </ul>
+    <a class="row-link" href={project.href}>
+      {readCase}<span class="visually-hidden">: {project.title}</span>
+      <Arrow />
+    </a>
+  </div>
+  <div class="work-media">
+    <slot />
+  </div>
+</article>

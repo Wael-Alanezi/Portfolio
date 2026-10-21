@@ -1,0 +1,20 @@
+---
+import { builtMonth, getSite, type Lang } from '../lib/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = await getSite(lang);
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="footer-meta">
+      <span>{t.name}</span>
+      <span>{t.footer.built} {builtMonth(lang)}</span>
+    </p>
+    <a href="#top">{t.footer.top}</a>
+  </div>
+</footer>

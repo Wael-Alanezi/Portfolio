@@ -1,27 +1,69 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import MapGrid from '../components/MapGrid.astro';
 import { getSite } from '../lib/site';
 
 const en = await getSite('en');
 const ar = await getSite('ar');
 ---
 
-<Layout title={`${en.notFound.title} | ${en.name}`} description={en.notFound.text} alternates={{ en: '/', ar: '/ar/' }} skip={en.skipToContent} ogAlt={en.name}>
-  <main id="main" class="missing">
-    <div class="missing-map" aria-hidden="true">
-      <MapGrid cols={40} rows={22} cell={48} gap={2} />
-    </div>
-    <div class="missing-text">
-      <p class="coords">404 · 24.7346° N, 46.6982° E</p>
-      <h1>{en.notFound.title}</h1>
-      <p>{en.notFound.text}</p>
-      <a class="btn btn-primary" href="/">{en.notFound.home}</a>
-      <div class="missing-ar" lang="ar" dir="rtl">
+<Layout title={`${en.notFound.title} | ${en.name}`} description={en.notFound.text} alternates={{ en: '/', ar: '/ar/' }} skip={en.skipToContent} ogAlt={en.ogAlt}>
+  <main id="main" class="missing blueprint">
+    <div class="container missing-grid">
+      <div class="missing-block">
+        <p class="label num">404</p>
+        <h1>{en.notFound.title}</h1>
+        <p class="lead">{en.notFound.text}</p>
+        <a class="btn btn-primary" href="/">{en.notFound.home}</a>
+      </div>
+      <div class="missing-block" lang="ar" dir="rtl">
+        <p class="label num">404</p>
         <h2>{ar.notFound.title}</h2>
-        <p>{ar.notFound.text}</p>
+        <p class="lead">{ar.notFound.text}</p>
         <a class="btn btn-secondary" href="/ar/" hreflang="ar">{ar.notFound.home}</a>
       </div>
     </div>
   </main>
 </Layout>
+
+<style>
+  .missing {
+    display: grid;
+    align-items: center;
+    min-block-size: 100dvh;
+    padding-block: 64px;
+  }
+
+  .missing-grid {
+    display: grid;
+    gap: 48px;
+  }
+
+  .missing-block {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    max-inline-size: 36rem;
+  }
+
+  .missing-block h2 {
+    font-size: var(--step-h2);
+  }
+
+  .missing-block:lang(ar) {
+    padding-block-start: 48px;
+    border-block-start: 1px solid var(--line);
+  }
+
+  @media (min-width: 960px) {
+    .missing-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .missing-block:lang(ar) {
+      padding-block-start: 0;
+      padding-inline-start: 48px;
+      border-block-start: 0;
+      border-inline-start: 1px solid var(--line);
+    }
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import { getSite, home, type Lang } from '../lib/site';
+
+interface Props {
+  lang: Lang;
+  alternate: string;
+  onHome?: boolean;
+}
+
+const { lang, alternate, onHome = false } = Astro.props;
+const t = await getSite(lang);
+const other = lang === 'ar' ? 'en' : 'ar';
+const base = onHome ? '' : home(lang);
+const links = [
+  { href: `${base}#work`, label: t.nav.work, index: '01' },
+  { href: `${base}#programs`, label: t.nav.programs, index: '02' },
+  { href: `${base}#about`, label: t.nav.about, index: '05' },
+  { href: `${base}#contact`, label: t.nav.contact, index: '05' },
+];
+---
+
+<header class="site-header" id="top">
+  <div class="container">
+    <a class="brand" href={home(lang)}>{t.name}</a>
+    <nav class="nav-links" aria-label={t.nav.label}>
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </nav>
+    <div class="nav-end">
+      <a class="lang-link" href={alternate} hreflang={other} lang={other} data-set-lang={other}>{t.nav.language}</a>
+      <button type="button" class="menu-button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" aria-label={t.nav.menu} data-menu-open>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog id="menu" class="menu" aria-label={t.nav.menu}>
+  <div class="container">
+    <div class="menu-top">
+      <span class="brand">{t.name}</span>
+      <button type="button" class="menu-close" aria-label={t.nav.close} data-menu-close>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+    </div>
+    <nav class="menu-links" aria-label={t.nav.label}>
+      {
+        links.map((link) => (
+          <a href={link.href} data-menu-close>
+            {link.label}
+            <span class="label num" aria-hidden="true">{link.index}</span>
+          </a>
+        ))
+      }
+    </nav>
+    <a class="lang-link" href={alternate} hreflang={other} lang={other} data-set-lang={other}>{t.nav.language}</a>
+  </div>
+</dialog>
+
+<script>
+  const menu = document.querySelector<HTMLDialogElement>('#menu');
+  const opener = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+  let viaLink = false;
+  opener?.addEventListener('click', () => {
+    menu?.showModal();
+    opener.setAttribute('aria-expanded', 'true');
+  });
+  menu?.querySelectorAll('[data-menu-close]').forEach((item) =>
+    item.addEventListener('click', () => {
+      viaLink = item.tagName === 'A';
+      menu.close();
+    }),
+  );
+  menu?.addEventListener('close', () => {
+    opener?.setAttribute('aria-expanded', 'false');
+    if (!viaLink) opener?.focus({ preventScroll: true });
+    viaLink = false;
+  });
+</script>

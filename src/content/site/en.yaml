@@ -1,83 +1,89 @@
 lang: en
-title: "Wael Alanezi | Software Engineering student, Riyadh"
-description: "Software Engineering student at Prince Sultan University (AI & Data Science) who turns data into decisions. Projects, results and contact."
+title: "Wael Alanezi | Software, data and AI systems"
+description: "Software Engineering student at Prince Sultan University in Riyadh (AI and Data Science track). I build software, data and AI systems and measure whether they work. Open to Summer 2027 internships."
+ogAlt: "Wael Alanezi, software, data and AI systems, Riyadh"
 name: Wael Alanezi
+otherName: وائل العنزي
 email: wael.m.alanezi@gmail.com
 phone: "+966507737137"
+phoneDisplay: "+966 50 773 7137"
 linkedin: https://www.linkedin.com/in/wael-alanezi
 github: https://github.com/Wael-Alanezi
 cv: /Wael-Alanezi-CV.pdf
 skipToContent: Skip to content
 
 nav:
-  projects: Projects
+  label: Main
+  work: Work
+  programs: Programs
   about: About
   contact: Contact
-  menu: Open menu
+  menu: Menu
   close: Close menu
-  language: "AR | EN"
-  languageLabel: "العربية"
+  language: العربية
 
 hero:
-  coordinates: "24.7346° N, 46.6982° E · Prince Sultan University, Riyadh"
-  mapsUrl: https://www.google.com/maps?q=24.73461,46.69823
-  newTab: "(opens in a new tab)"
-  eyebrow: "AI and Data Science · Prince Sultan University"
-  eyebrowShort: "AI and Data Science · PSU"
-  role: Software Engineering Student
-  tagline: "I turn data into decisions. Explore my work on the map, from retrieval agents to drone-based plant health mapping."
-  taglineShort: "I turn data into decisions. Explore my work on the map."
-  viewProjects: View projects
-  downloadCv: Download CV
-  skip: Skip to projects
-  scan: Scanning vegetation layer
-  note: "Gold pins mark projects. Scroll to zoom into each one."
-  explore: Scroll to explore
+  kicker: "Software engineering · AI and data science · Riyadh"
+  role: "Software Engineering student at Prince Sultan University, graduating in 2028."
+  lead: "I build software, data and AI systems, and I measure whether they work. Open to Summer 2027 internships in software, data and AI."
+  work: Selected work
+  cv: CV (PDF)
+  proofLabel: Results
+  proof:
+    - label: "Rent & Build · search p95"
+      value: "259 ms"
+      note: "down from 2,743 ms on 100,000 listings"
+      href: /projects/rent-and-build/
+      accent: true
+    - label: "Mubsir · products found"
+      value: "28 of 33"
+      note: "with 78.1% matching precision"
+      href: /projects/mubsir/
+    - label: "Agentic assistant · agents"
+      value: "3"
+      note: "calendar, notes and email under one supervisor"
+      href: /projects/agentic-assistant/
+  figure: "FIG. 00 · Agentic assistant · Architecture"
 
-pins:
-  agentic-assistant: RAG agent
-  mubsir: Mubsir
-  ndvi-drone: NDVI drone
-  rent-and-build: Rent & Build
-  lessons-learned: Lessons learned
+work:
+  index: "01 / Work"
+  title: Selected work
+  readCase: Read the case study
 
-layers:
-  title: Explore the map by layer
-  subtitle: "Switch between skills, projects, and goals to see how they connect."
-  skills: Skills
-  projects: Projects
-  goals: Goals
-  note: "Pins are placed on a map of Riyadh. Tap a pin to open the project."
-  skillPins: [Python, SQL, Java]
-  goalPins: [Internship 2027, Graduation 2028]
-  openProject: "Open project:"
+programs:
+  index: "02 / Programs"
+  title: "Hackathons & programs"
+  items:
+    - date: "2026"
+      title: Alenmaa Hackathon
+      text: "Two team projects. On Mubsir I built the backend and led testing. On Lessons learned for PMOs I designed the agentic RAG system and built its knowledge base."
+      links:
+        - label: Mubsir
+          href: /projects/mubsir/
+        - label: Lessons learned for PMOs
+          href: /projects/lessons-learned/
+    - date: "Jul 2026"
+      title: SDAIA Academy
+      text: "Building Agentic AI Systems and Developing Generative AI Solutions. My capstone was the agentic personal assistant."
+      links:
+        - label: Agentic RAG personal assistant
+          href: /projects/agentic-assistant/
+    - date: "Sep 2026"
+      title: "Project Management Club, PSU"
+      text: "Member, learning structured project delivery."
 
-detail:
-  breadcrumb: Projects
-  openCase: Open full case study
-  backToMap: Back to map
-  sample: Sample
-  ndviNote: "Sample heatmap for illustration. Final results will come from the drone survey."
-  lowZone: Low vigor zone
-  low: Low
-  high: High plant health
-  barsTitle: Sample comparison
-  barsNote: "Sample data for illustration, not measured results."
-  stores: [Store A, Store B, Store C]
-  pipelineNote: "How the system moves from input to output."
-
-projectsSection:
-  title: Projects
-  subtitle: "Five pieces of work, from AI agents to drone sensing."
-  viewProject: View project
+more:
+  index: "03 / More"
+  title: More work
 
 training:
+  index: "04 / Training"
   title: Training and certifications
-  subtitle: "Courses I completed in 2026. Hover or focus a certificate to preview it, or select it to open it."
+  subtitle: "Courses I completed in 2026. Select a certificate to view it."
   coursesLabel: Relevant coursework
   courses: "Data structures and complexity analysis, software engineering and UML, and 3-tier architecture."
   close: Close
-  missing: "[Certificate image]"
+  missing: "Image not available"
   items:
     - title: Building Agentic AI Systems
       issuer: SDAIA Academy
@@ -106,27 +112,65 @@ training:
       alt: "Saudi Space Agency Space Academy certificate for Introduction to Space Mission Design, September 2026"
 
 about:
+  index: "05 / About"
   title: About
-  text: "I am a Software Engineering student at Prince Sultan University in Riyadh, specializing in AI and Data Science. I am aiming for digital transformation and product roles in large organizations, and I am open to internships in software, data, and AI."
+  text: "I study Software Engineering at Prince Sultan University in Riyadh, on the AI and Data Science track. I aim for digital transformation and product roles in large organizations, and I am open to internships in software, data and AI."
   facts:
     - label: Graduating
       value: "2028"
-    - label: Languages
-      value: Arabic · English
+    - label: Available
+      value: June 2027
     - label: Track
       value: AI and Data Science
-    - label: Community
-      value: Project Management Club
+    - label: Languages
+      value: Arabic · English
 
 contact:
-  title: Let us connect
+  title: "Let's talk"
   email: Email
   phone: Phone
   linkedin: LinkedIn
   github: GitHub
-  downloadCv: Download CV
+  cv: Download CV (PDF)
+
+footer:
+  built: Built
+  top: Back to top
+
+figures:
+  request: Request
+  supervisor: Supervisor
+  calendar: Calendar agent
+  knowledge: Knowledge-base agent
+  email: Email agent
+  draft: Draft
+  approve: Person approves
+  send: Send
+  rag: Five-stage RAG
+  before: Before
+  after: After indexes
+  p95note: "Search p95 · 100,000 listings · k6, 20 virtual users"
+  ms: ms
+  coverage: Coverage
+  coverageNote: "28 of 33 test items found"
+  precision: Matching precision
+  precisionNote: "95% CI: 63.8% to 92.4%"
+  price: Average price difference
+  priceNote: on correct matches
+  accessories: "Half of the cheapest-store picks were accessories"
+  planned: Planned
+  screenshot: "Rent & Build equipment page: an excavator illustration next to the booking card with rental dates, the total price and a Request booking button"
+
+caseStudy:
+  back: All work
+  stack: Stack
+  links: Links
+  next: Next project
+  video: "Screen recording of Rent & Build: browsing equipment, requesting a booking, the owner approving it, and the renter paying."
+  architecture: "Rent & Build three-tier architecture: owner and renter interfaces, then messaging, authentication, booking and search services, then user, vehicle and booking databases."
+  architectureCredit: Architecture by the SE201 team
 
 notFound:
   title: Page not found
-  text: "This page doesn’t exist or has moved. The map, projects and contact details are on the home page."
+  text: "This page doesn’t exist or has moved. My work, programs and contact details are on the home page."
   home: Go to the home page
