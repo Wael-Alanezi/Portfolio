@@ -146,3 +146,4 @@ Bricolage uses its variable `opsz`, `wdth` and `wght` axes, with `font-optical-s
 
 ## Facts confirmed after launch
 - **What:** The agentic assistant is marked as a solo project. Wael's Rent & Build role is "Leader and backend developer", so the case study now says he led the team and built the backend (it used to say he built the full-stack implementation). The hackathon's Arabic name is هاكاثون الإنماء.
+- **Agentic assistant store:** the site no longer says it uses Chroma. Wael wasn't sure, and the repo's code uses an in-memory vector store with Hugging Face embeddings, so the case study now says that. The Alenmaa Hackathon month is unknown, so the site shows the year only.

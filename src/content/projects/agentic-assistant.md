@@ -14,7 +14,7 @@ points:
   - "Emails pause for a person to approve them before they are sent."
 tags: ["LangGraph", "Agentic RAG", "Human in the loop"]
 steps: ["Load", "Split", "Embed", "Store", "Retrieve"]
-stack: ["Python", "LangGraph", "Chroma", "OpenRouter", "Google Colab"]
+stack: ["Python", "LangGraph", "Hugging Face embeddings", "OpenRouter", "Google Colab"]
 links:
   - label: "Code"
     href: "https://github.com/Wael-Alanezi/agentic-personal-assistant"
@@ -22,4 +22,4 @@ links:
 
 ## What I built
 
-A LangGraph supervisor with three sub-agents (calendar, knowledge base, email), a five-stage RAG pipeline with Chroma and local embeddings, and human-in-the-loop interrupts (LangGraph interrupt and resume) so a person approves each email before it is sent.
+A LangGraph supervisor with three sub-agents (calendar, knowledge base, email), a five-stage RAG pipeline with an in-memory vector store and local embeddings, and human-in-the-loop interrupts (LangGraph interrupt and resume) so a person approves each email before it is sent.
