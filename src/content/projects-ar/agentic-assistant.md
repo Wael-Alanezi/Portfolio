@@ -15,3 +15,7 @@ links:
   - label: "الشيفرة المصدرية"
     href: "https://github.com/Wael-Alanezi/agentic-personal-assistant"
 ---
+
+## ما بنيته
+
+مشرف مبني على LangGraph مع ثلاثة وكلاء فرعيين (التقويم، وقاعدة المعرفة، والبريد الإلكتروني)، ومسار RAG من خمس مراحل مع Chroma وتضمينات محلية، ونقاط توقف للإشراف البشري (interrupt وresume في LangGraph) حتى يوافق شخص على كل رسالة قبل إرسالها.

@@ -36,7 +36,7 @@ export default defineConfig({
       provider: fontProviders.local(),
       name: 'IBM Plex Sans Arabic',
       cssVariable: '--font-arabic',
-      fallbacks: ['sans-serif'],
+      fallbacks: [],
       options: {
         variants: [
           {
