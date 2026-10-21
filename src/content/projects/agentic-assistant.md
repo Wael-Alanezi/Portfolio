@@ -4,7 +4,7 @@ order: 2
 group: "work"
 visual: "rag"
 figure: "FIG. 02 · Agentic assistant · RAG pipeline"
-meta: ["SDAIA Academy capstone", "2026"]
+meta: ["SDAIA Academy capstone", "2026", "Solo"]
 summary: "A multi-agent assistant for calendar, notes and email, with a person in the loop."
 description: "A LangGraph supervisor routes requests to three agents for calendar, knowledge base and email. A five-stage RAG pipeline answers from documents, and a person approves emails before they are sent."
 context: "Capstone for SDAIA Academy’s “Building Agentic AI Systems” program, July 2026."

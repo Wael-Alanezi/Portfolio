@@ -140,6 +140,9 @@ Bricolage uses its variable `opsz`, `wdth` and `wght` axes, with `font-optical-s
 - **Why:** A recruiter should see who Wael is, what he builds and real proof within one screen. The old map design put an unfinished project first and showed sample data.
 - **Kept:** the certificate preview and dialog, the Rent & Build case study and video, the bilingual 404, RTL support and the no-tracking setup.
 - **Removed:** the map grid, pins, layer chips, scan line and every sample visual.
-- **Agentic assistant:** the five RAG stage names (load, split, embed, store, retrieve) come from the project's GitHub README. Its repo lists three team members, so the site doesn't call it solo until Wael confirms.
+- **Agentic assistant:** the five RAG stage names (load, split, embed, store, retrieve) come from the project's GitHub README. Wael confirmed it was a solo project, although the repo's README lists three team members.
 - **Motion:** connectors and bars draw in once as they scroll into view (CSS scroll-driven animation, only where supported) and stay still with reduced motion.
 - **Measured (October 2026, local production build):** Lighthouse 99 mobile and 100 desktop for performance, 100 for accessibility, best practices and SEO, on `/` and `/ar/`. Home page transfer 175 KB, layout shift 0.
+
+## Facts confirmed after launch
+- **What:** The agentic assistant is marked as a solo project. Wael's Rent & Build role is "Leader and backend developer", so the case study now says he led the team and built the backend (it used to say he built the full-stack implementation). The hackathon's Arabic name is هاكاثون الإنماء.

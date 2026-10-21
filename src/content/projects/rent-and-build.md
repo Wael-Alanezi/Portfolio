@@ -7,7 +7,7 @@ figure: "FIG. 01 · Rent & Build · Search p95"
 meta: ["SE201", "2026", "Leader and backend developer"]
 summary: "Equipment owners have no shared place to list machines, and renters call around. The costly failure is a double booking."
 description: "A construction equipment rental marketplace for Saudi Arabia, built so two renters can never book the same machine for the same dates."
-context: "Designed as a team in SE201 at Prince Sultan University (6 students). I built the full-stack implementation, with Claude Code as an AI pair programmer."
+context: "Designed as a team in SE201 at Prince Sultan University (6 students). I led the team and built the backend, with Claude Code as an AI pair programmer."
 points:
   - "Search p95 down from 2,743 ms to 259 ms on 100,000 listings (k6, 20 virtual users)."
   - "Bookings lock the vehicle row in a transaction: of 10 simultaneous approvals for the same dates, exactly one wins, on every CI run."
