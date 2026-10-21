@@ -19,7 +19,6 @@ video: "rent-and-build-demo"
 videoCaption: "Screen recording of Rent & Build: browsing equipment, requesting a booking, the owner approving it, and the renter paying."
 stack: ["Java 21", "Spring Boot", "React", "MySQL", "Docker", "GitHub Actions", "Testcontainers", "Playwright", "k6", "Moyasar (sandbox)"]
 links:
-  - label: "Live demo [URL]"
   - label: "Code"
     href: "https://github.com/Wael-Alanezi/Rent-Build"
   - label: "Engineering decisions"

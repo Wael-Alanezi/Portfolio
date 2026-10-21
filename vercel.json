@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/cv.pdf", "destination": "/Wael-Alanezi-CV.pdf", "permanent": true }
+  ]
+}

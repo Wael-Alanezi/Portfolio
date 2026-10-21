@@ -15,7 +15,7 @@ The map grids, heatmaps and pins are drawn in code from a seeded pattern (`src/l
 
 ## Add files
 
-- **CV:** `public/cv.pdf`. Replace the file to update it.
+- **CV:** `public/Wael-Alanezi-CV.pdf`, built by `scripts/cv.py` (ReportLab: `python3 scripts/cv.py`). Edit the text in the script and run it again to update it. The old `/cv.pdf` address redirects to it (`vercel.json`).
 - **Project images:** `public/projects/`. A project with `visual: image` uses its `image` file.
 - **Certificates:** images live in `public/certificates/`. Small preview thumbnails are made automatically in `public/certificates/thumbs/` when you run `npm run dev` or `npm run build`. Check certificates for personal details (such as an ID number) and cover them before adding.
 

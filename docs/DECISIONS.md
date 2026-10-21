@@ -129,3 +129,8 @@ Bricolage uses its variable `opsz`, `wdth` and `wght` axes, with `font-optical-s
 - **Arabic coordinates:** use left-to-right marks around each number, so the degree sign stays on the correct side.
 - **Social image and favicon:** redrawn in the new palette with no text: a pinned map grid and a gold pin.
 - **Contrast:** every spec colour pair passes WCAG AA on its background (lowest 4.79:1), so the spec's opacities are kept as they are.
+
+## Blueprint redesign, phase 1: trust fixes
+- **What:** The CV is now `public/Wael-Alanezi-CV.pdf`, rebuilt by `scripts/cv.py` with the same layout as the old file (every line in the same place). Only the profile changed: it now says Wael is seeking a Summer 2027 internship in software, data or AI, instead of naming one company's role. `/cv.pdf` redirects permanently to the new file through `vercel.json`. The Rent & Build "Live demo" link is gone, because there is no public demo. Screenshots are no longer committed (`docs/screenshots/` is ignored).
+- **Why:** A CV written for one employer looks wrong to every other recruiter, and a link with "[URL]" in it looks unfinished.
+- **Alternative rejected:** Editing the old PDF directly. Its generator wasn't in the repo, so a script that can be run again is easier to keep up to date.
