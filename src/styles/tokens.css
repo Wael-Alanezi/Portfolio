@@ -1,0 +1,59 @@
+:root {
+  color-scheme: dark;
+
+  --bg: #0b1622;
+  --bg-alt: #0d1b29;
+  --panel: #112131;
+  --line: #24394f;
+  --text: #e8eef3;
+  --body: #c9d3dd;
+  --muted: #9aabbd;
+  --accent: #f5a524;
+  --blue: #7cb4ff;
+
+  --grid-major: rgb(124 180 255 / 0.1);
+  --grid-minor: rgb(124 180 255 / 0.045);
+  --tick: rgb(124 180 255 / 0.7);
+  --scrim: rgb(11 22 34 / 0.86);
+  --overlay: rgb(11 22 34 / 0.92);
+
+  --sans: var(--font-sans), system-ui, sans-serif;
+  --mono: var(--font-mono), ui-monospace, monospace;
+  --arabic: var(--font-arabic), var(--font-sans), system-ui, sans-serif;
+
+  --step-h1: clamp(2.75rem, 1.9rem + 3.6vw, 5.25rem);
+  --step-h2: clamp(2rem, 1.6rem + 1.6vw, 3rem);
+  --step-h3: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --step-lead: 1.25rem;
+  --step-body: 1.0625rem;
+  --step-small: 0.875rem;
+  --step-label: 0.75rem;
+
+  --lh-h1: 1.02;
+  --lh-h2: 1.1;
+  --lh-h3: 1.2;
+  --lh-lead: 1.6;
+  --lh-body: 1.65;
+  --track-h1: -0.02em;
+  --track-label: 0.08em;
+
+  --container: 1200px;
+  --gutter: clamp(16px, 5vw, 48px);
+  --gap: 24px;
+  --section: clamp(72px, 10vw, 128px);
+  --header: 64px;
+
+  --radius: 8px;
+  --radius-sm: 6px;
+}
+
+:root:lang(ar) {
+  --sans: var(--arabic);
+  --track-h1: 0;
+  --track-label: 0;
+  --lh-h1: 1.3;
+  --lh-h2: 1.3;
+  --lh-h3: 1.3;
+  --lh-lead: 1.85;
+  --lh-body: 1.85;
+}

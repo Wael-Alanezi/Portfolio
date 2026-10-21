@@ -44,15 +44,13 @@
 .cert-preview .cert-card {
   inline-size: 100%;
   block-size: 100%;
-  border-radius: var(--cert-radius, 4px);
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 0.08),
-    0 12px 32px -8px rgb(0 0 0 / 0.28);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
 }
 
 .cert-image {
   object-fit: cover;
-  background: var(--cert-surface);
+  background: var(--panel);
 }
 
 .cert-card {
@@ -61,9 +59,9 @@
   justify-content: flex-end;
   gap: 4px;
   padding: 16px;
-  background: var(--cert-surface);
-  border: 1px solid var(--cert-line);
-  color: var(--cert-ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--text);
   font-size: 0.8125rem;
   line-height: 1.35;
 }
@@ -79,7 +77,7 @@
 
 .cert-card-meta,
 .cert-card-note {
-  color: var(--cert-muted);
+  color: var(--muted);
 }
 
 .cert-card-note {
@@ -94,11 +92,11 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--cert-ink);
+  color: var(--text);
 }
 
 .cert-dialog::backdrop {
-  background: rgb(6 10 9 / 0.8);
+  background: var(--scrim);
 }
 
 .cert-dialog[open] {
@@ -109,9 +107,9 @@
   display: grid;
   gap: 12px;
   padding: 12px;
-  border: 1px solid var(--cert-line);
-  border-radius: var(--cert-radius, 4px);
-  background: var(--cert-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
 }
 
 .cert-dialog-head {
@@ -131,9 +129,10 @@
   flex: none;
   min-block-size: 44px;
   padding-inline: 16px;
-  border: 1px solid var(--cert-line);
-  border-radius: var(--cert-radius, 4px);
-  background: var(--cert-surface);
+  border: 1px solid var(--muted);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-weight: 600;
   cursor: pointer;
 }
 

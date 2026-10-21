@@ -1,0 +1,17 @@
+---
+interface Props {
+  title: string;
+  class?: string;
+  label?: string;
+}
+
+const { title, class: className, label } = Astro.props;
+---
+
+<figure class:list={['sheet', className]} aria-label={label}>
+  <span class="sheet-ticks" aria-hidden="true"></span>
+  <div class="sheet-body">
+    <slot />
+  </div>
+  <figcaption class="sheet-title">{title}</figcaption>
+</figure>

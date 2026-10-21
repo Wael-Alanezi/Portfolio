@@ -78,7 +78,7 @@ const chips = [
 ];
 ---
 
-<Layout title={t.title} description={t.description} lang={lang} alternates={{ en: '/', ar: '/ar/' }} skip={t.skipToContent}>
+<Layout title={t.title} description={t.description} lang={lang} alternates={{ en: '/', ar: '/ar/' }} skip={t.skipToContent} ogAlt={t.name}>
   <header class="nav">
     <a class="brand" href={rtl ? '/ar/' : '/'}>{t.name}</a>
     <nav class="nav-links" aria-label={t.nav.projects}>

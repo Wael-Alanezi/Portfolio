@@ -23,7 +23,7 @@ const caseImage = data.caseImage ? await projectImage(data.caseImage) : undefine
 const poster = data.video ? `/projects/${data.video}-poster.webp` : undefined;
 ---
 
-<Layout title={`${data.title} | ${t.name}`} description={data.oneLine} skip={t.skipToContent}>
+<Layout title={`${data.title} | ${t.name}`} description={data.oneLine} alternates={{ en: `/projects/${project.id}/`, ar: '/ar/' }} skip={t.skipToContent} ogAlt={t.name}>
   <header class="nav nav-solid">
     <a class="brand" href="/">{t.name}</a>
     <nav class="nav-links" aria-label={t.nav.projects}>

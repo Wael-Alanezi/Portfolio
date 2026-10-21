@@ -7,7 +7,7 @@ const en = await getSite('en');
 const ar = await getSite('ar');
 ---
 
-<Layout title={`${en.notFound.title} | ${en.name}`} description={en.notFound.text} skip={en.skipToContent}>
+<Layout title={`${en.notFound.title} | ${en.name}`} description={en.notFound.text} alternates={{ en: '/', ar: '/ar/' }} skip={en.skipToContent} ogAlt={en.name}>
   <main id="main" class="missing">
     <div class="missing-map" aria-hidden="true">
       <MapGrid cols={40} rows={22} cell={48} gap={2} />

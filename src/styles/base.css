@@ -7,10 +7,17 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scroll-padding-block-start: calc(var(--header) + 16px);
+  background: var(--bg);
 }
 
 body {
   margin: 0;
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--sans);
+  font-size: var(--step-body);
+  line-height: var(--lh-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -34,7 +41,9 @@ ol {
   list-style: none;
 }
 
-img {
+img,
+video,
+picture {
   display: block;
   max-inline-size: 100%;
   block-size: auto;
@@ -52,13 +61,18 @@ button {
 a,
 button {
   touch-action: manipulation;
-  -webkit-tap-highlight-color: color-mix(in srgb, var(--focus) 20%, transparent);
+  -webkit-tap-highlight-color: transparent;
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus);
+  outline: 2px solid var(--blue);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+::selection {
+  background: var(--blue);
+  color: var(--bg);
 }
 
 .skip-link {
@@ -66,14 +80,16 @@ button {
   inset-inline-start: 16px;
   inset-block-start: -100px;
   z-index: 100;
-  padding: 8px 14px;
-  background: var(--ink);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
   color: var(--bg);
+  font-weight: 600;
   text-decoration: none;
 }
 
 .skip-link:focus-visible {
-  inset-block-start: 16px;
+  inset-block-start: 12px;
 }
 
 .visually-hidden {
@@ -91,6 +107,6 @@ button {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+    animation: none !important;
   }
 }
